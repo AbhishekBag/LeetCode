@@ -1,6 +1,5 @@
 public class Solution {
     public IList<IList<int>> HighestRankedKItems(int[][] grid, int[] pricing, int[] start, int k) {
-        // PriorityQueue<Cell, int> res = new PriorityQueue<Cell, int>();
         List<Cell> map = new List<Cell>();
 
         List<IList<int>> res = new List<IList<int>>();
