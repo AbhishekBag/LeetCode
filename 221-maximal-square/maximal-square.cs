@@ -1,65 +1,63 @@
 public class Solution {
     public int MaximalSquare(char[][] matrix) {
-        int R = matrix.Length;
-        int C = matrix[0].Length;
-        if(R == 1 && C == 1) {
-            if(matrix[R - 1][C - 1] == '1') {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
+        int maxD = 0;
+        for (int r = 0; r<matrix.Length; r++) {
+            for(int c=0; c<matrix[0].Length; c++) {
+                if (matrix[r][c] == '1') {
+                    maxD = Math.Max(maxD, 1);
+                    // Console.WriteLine($"r: {r}; c: {c}; maxD: {maxD}; matrix[r][c]: {matrix[r][c]}");
 
-        int max = 0;
-        for(int i = 0; i < R; i++) {
-            for(int j = 0; j < C; j++) {
-                
-                // Console.WriteLine($"i: {i}; j: {j}; max: {max}");
+                    maxD = Math.Max(maxD, getMaxDiagonal(matrix, r, c));
 
-                if(matrix[i][j] == '1') {
-                    int s = 1;
-                    int m = i + 1;
-                    int n = j + 1;
-
-                    while(IsNextValid(matrix, i, j, m, n)) {
-                        s++;
-                        m++;
-                        n++;
-                    }
-
-                    max = Math.Max(max, s);
+                    // Console.WriteLine();
+                    // Console.WriteLine();
                 }
-
-                // Console.WriteLine();
-                // Console.WriteLine();
             }
         }
-
-        return max * max;
+        return maxD * maxD;        
     }
 
-    private bool IsNextValid(char[][] matrix, int r, int c, int m, int n) {
-        int R = matrix.Length;
-        int C = matrix[0].Length;
+    private int getMaxDiagonal(char[][] matrix, int r, int c) {
+        int maxD = 1;
+        int startR = r;
+        int startC = c;
+        int newR = r;
+        int newC = c;
 
-        // Console.WriteLine($"r: {r}, c: {c}, m: {m}, n: {n}");
+        while(newR < matrix.Length-1 && newC < matrix[0].Length-1 ) {
+            newR++;
+            newC++;
+            // maxD++;
 
-        if(m < R && n < C && matrix[m][n] == '1') {
-            for(int i = r; i <= m; i++) {
-                if(matrix[i][n] != '1') {
-                    return false;
-                }
+            // Console.WriteLine($"newR: {newR}; newC: {newC}; maxD: {maxD}: isNextValid: ");
+            if (!checkNewRowColumn(matrix, startR, newR, startC, newC)) {
+                // Console.Write("No");
+                return maxD;
             }
-
-            for(int j = c; j <= n; j++) {
-                if(matrix[m][j] != '1') {
-                    return false;
-                }
-            }
-
-            return true;
+            maxD++;
         }
 
-        return false;
+        return maxD;   
     }
+
+    private bool checkNewRowColumn (char[][] matrix, int startR, int newR, int startC, int newC) {
+        if(matrix[newR][newC] != '1') {
+            return false;
+        }
+
+        for (int r = startR; r<=newR; r++) {
+            if (matrix[r][newC] == '0') {
+                return false;
+            } 
+        }
+
+        for (int c = startC; c<=newC; c++) {
+            if (matrix[newR][c] == '0') {
+                return false;
+            } 
+        }
+
+        return true;
+    }
+
 }
