@@ -5,12 +5,7 @@ public class Solution {
             for(int c=0; c<matrix[0].Length; c++) {
                 if (matrix[r][c] == '1') {
                     maxD = Math.Max(maxD, 1);
-                    // Console.WriteLine($"r: {r}; c: {c}; maxD: {maxD}; matrix[r][c]: {matrix[r][c]}");
-
                     maxD = Math.Max(maxD, getMaxDiagonal(matrix, r, c));
-
-                    // Console.WriteLine();
-                    // Console.WriteLine();
                 }
             }
         }
@@ -29,9 +24,7 @@ public class Solution {
             newC++;
             // maxD++;
 
-            // Console.WriteLine($"newR: {newR}; newC: {newC}; maxD: {maxD}: isNextValid: ");
             if (!checkNewRowColumn(matrix, startR, newR, startC, newC)) {
-                // Console.Write("No");
                 return maxD;
             }
             maxD++;
