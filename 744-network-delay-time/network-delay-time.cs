@@ -37,22 +37,16 @@ public class Solution {
             if(eMap.ContainsKey(poped)) {
                 var edges = eMap[poped];
                 foreach(var edge in edges) {
-                    // Console.WriteLine($"poped: {poped}; d[edge.d]: {d[edge.d]}; d[edge.s]: {d[edge.s]}; edge.w: {edge.w}");
                     if(d[edge.d] > d[edge.s] + edge.w) {
                         d[edge.d] = d[edge.s] + edge.w;
                         q.Enqueue(edge.d, d[edge.d]);
-                        // Console.WriteLine($"Enqueuing {edge.d}");
                     }
                 }
             }
-
-            // Console.WriteLine();
-            // Console.WriteLine();
         }
 
         int mCost = 0;
         for(int i = 1; i <= n; i++) {
-            // Console.WriteLine($"cost of {i}: {d[i]};");
             mCost = Math.Max(mCost, d[i]);
         }
 
