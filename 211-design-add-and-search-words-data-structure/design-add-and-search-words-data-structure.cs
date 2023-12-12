@@ -19,9 +19,44 @@ public class WordDictionary {
         tr.isEnd = true;
     }
 
+    // public bool Search(string word) {
+    //     return SearchWord(word, 0, this);
+    // }
+
     public bool Search(string word) {
-        return SearchWord(word, 0, this);
+    List<WordDictionary> nodes = new List<WordDictionary>();
+    nodes.Add(this);
+
+    for (int i = 0; i < word.Length; i++) {
+        char c = word[i];
+        List<WordDictionary> nextNodes = new List<WordDictionary>();
+
+        foreach (WordDictionary node in nodes) {
+            if (c == '.') {
+                foreach (WordDictionary child in node.root) {
+                    if (child != null) {
+                        nextNodes.Add(child);
+                    }
+                }
+            } else if (node.root[c - 'a'] != null) {
+                nextNodes.Add(node.root[c - 'a']);
+            }
+        }
+
+        nodes = nextNodes;
+        if (nodes.Count == 0) {
+            return false;
+        }
     }
+
+    foreach (WordDictionary node in nodes) {
+        if (node.isEnd) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
     private bool SearchWord(string word, int index, WordDictionary node) {
         if (index == word.Length) {
