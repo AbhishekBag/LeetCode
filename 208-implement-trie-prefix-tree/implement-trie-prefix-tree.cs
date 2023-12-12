@@ -9,31 +9,25 @@ public class Trie {
     }
     
     public void Insert(string word) {
-        Trie[] cur = root;
         var tr = this;
         foreach(char c in word) {
-            if(cur[c - 'a'] != null) {
-                tr = cur[c - 'a'];
-                cur = tr.root;
-            } else {
-                tr = new Trie();
-                cur[c - 'a'] = tr;
-                cur = tr.root;
+            if(tr.root[c - 'a'] == null) {
+                tr.root[c - 'a'] = new Trie();
             }
+            
+            tr = tr.root[c - 'a'];
         }
 
         tr.isEnd = true;
     }
     
     public bool Search(string word) {
-        var cur = root;
         var tr = this;
         foreach(char c in word) {
-            if(cur[c - 'a'] != null) {
-                tr = cur[c - 'a'];
-                cur = tr.root;
-            } else {
+            if(tr.root[c - 'a'] == null) {
                 return false;
+            } else {
+                tr = tr.root[c - 'a'];
             }
         }
 
@@ -41,14 +35,12 @@ public class Trie {
     }
     
     public bool StartsWith(string prefix) {
-        var cur = root;
         var tr = this;
         foreach(char c in prefix) {
-            if(cur[c - 'a'] != null) {
-                tr = cur[c - 'a'];
-                cur = tr.root;
-            } else {
+            if(tr.root[c - 'a'] == null) {
                 return false;
+            } else {
+                tr = tr.root[c - 'a'];
             }
         }
 
