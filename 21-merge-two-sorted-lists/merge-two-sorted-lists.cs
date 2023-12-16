@@ -24,7 +24,7 @@ public class Solution {
 
         ListNode head = null, tmp = null;
         if(list1.val > list2.val) {
-            Console.WriteLine($"Added {list2.val} from list2.");
+            // Console.WriteLine($"Added {list2.val} from list2.");
             head = list2;
             list2 = list2.next;
         } else {
