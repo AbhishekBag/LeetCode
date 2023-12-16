@@ -20,7 +20,7 @@ public class Solution {
     private string CleanString(string s) {
         StringBuilder sb = new StringBuilder();
         foreach(char c in s) {
-            if(c >= 'a' && c <= 'z' || c >= '0' && c <= '9') {
+            if(Char.IsLetterOrDigit(c)) {// c >= 'a' && c <= 'z' || c >= '0' && c <= '9') {
                 sb.Append(c);
             }
         }
