@@ -6,10 +6,10 @@ public class Solution {
             arr[i] = Enumerable.Repeat(-1, text2.Length).ToArray();
         }
 
-        return GetSequenceLength(arr, text1, text2, 0, 0);
+        return GetSequenceLength(text1, text2, 0, 0);
     }
 
-    private int GetSequenceLength(int[][] arr, string text1, string text2, int p1, int p2) {
+    private int GetSequenceLength(string text1, string text2, int p1, int p2) {
         if(p1 >= text1.Length || p2 >= text2.Length) {
             return 0;
         }
@@ -19,12 +19,12 @@ public class Solution {
         }
 
         if(text1[p1] != text2[p2]) {
-            int IncreaseT1 = GetSequenceLength(arr, text1, text2, p1 + 1, p2);
-            int IncreaseT2 = GetSequenceLength(arr, text1, text2, p1, p2 + 1);
+            int IncreaseT1 = GetSequenceLength(text1, text2, p1 + 1, p2);
+            int IncreaseT2 = GetSequenceLength(text1, text2, p1, p2 + 1);
 
             arr[p1][p2] = Math.Max(IncreaseT1, IncreaseT2);
         } else {
-            arr[p1][p2] = 1 + GetSequenceLength(arr, text1, text2, p1 + 1, p2 + 1);
+            arr[p1][p2] = 1 + GetSequenceLength(text1, text2, p1 + 1, p2 + 1);
         }
 
         return arr[p1][p2];
