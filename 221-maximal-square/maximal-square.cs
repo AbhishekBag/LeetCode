@@ -29,9 +29,7 @@ public class Solution {
                     dp[i][j] = (int)(matrix[i][j] - '0');
                     max = Math.Max(max, dp[i][j]);
                 } else {
-                    if(matrix[i][j] == '0') {
-                        dp[i][j] = 0;
-                    } else {
+                    if(matrix[i][j] == '1') {
                         dp[i][j] = Math.Min(dp[i - 1][j - 1],
                             Math.Min(dp[i - 1][j], dp[i][j - 1])) + 1;
 
