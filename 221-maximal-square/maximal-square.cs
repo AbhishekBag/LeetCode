@@ -7,21 +7,7 @@ public class Solution {
 
         for(int i = 0; i < r; i++) {
             dp[i] = Enumerable.Repeat(0, c).ToArray();
-            // dp[i][0] = (int)(matrix[i][0] - '0');
-
-            // max = Math.Max(max, dp[i][0]);
         }
-
-        // for(int j = 0; j < c; j++) {
-        //     dp[0][j] = (int)(matrix[0][j] - '0');
-
-        //     max = Math.Max(max, dp[0][j]);
-        // }
-
-        // for(int i = 0; i < r; i++) {
-        //     for(int j = 0; j < c; j++) {
-        //     }
-        // }
 
         for(int i = 0; i < r; i++) {
             for(int j = 0; j < c; j++) {
