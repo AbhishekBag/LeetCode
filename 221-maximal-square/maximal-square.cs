@@ -1,56 +1,50 @@
 public class Solution {
     public int MaximalSquare(char[][] matrix) {
-        int maxD = 0;
-        for (int r = 0; r<matrix.Length; r++) {
-            for(int c=0; c<matrix[0].Length; c++) {
-                if (matrix[r][c] == '1') {
-                    maxD = Math.Max(maxD, 1);
-                    maxD = Math.Max(maxD, getMaxDiagonal(matrix, r, c));
+        int r = matrix.Length;
+        int c = matrix[0].Length;
+        int[][] dp = new int[r][];
+        int max = 0;
+
+        for(int i = 0; i < r; i++) {
+            dp[i] = Enumerable.Repeat(0, c).ToArray();
+            dp[i][0] = (int)(matrix[i][0] - '0');
+
+            max = Math.Max(max, dp[i][0]);
+        }
+
+        for(int j = 0; j < c; j++) {
+            dp[0][j] = (int)(matrix[0][j] - '0');
+
+            max = Math.Max(max, dp[0][j]);
+        }
+
+        for(int i = 0; i < r; i++) {
+            for(int j = 0; j < c; j++) {
+                // Console.Write($"{dp[i][j]} ");
+            }
+
+            // Console.WriteLine();
+        }
+
+        // Console.WriteLine();
+
+        for(int i = 1; i < r; i++) {
+            for(int j = 1; j < c; j++) {
+                if(matrix[i][j] == '0') {
+                    dp[i][j] = 0;
+                } else {
+                    dp[i][j] = Math.Min(dp[i - 1][j - 1],
+                        Math.Min(dp[i - 1][j], dp[i][j - 1])) + 1;
+
+                    max = Math.Max(max, dp[i][j]);
                 }
+
+                // Console.Write($"{dp[i][j]} ");
             }
+
+            // Console.WriteLine();
         }
-        return maxD * maxD;        
+
+        return max * max;       
     }
-
-    private int getMaxDiagonal(char[][] matrix, int r, int c) {
-        int maxD = 1;
-        int startR = r;
-        int startC = c;
-        int newR = r;
-        int newC = c;
-
-        while(newR < matrix.Length-1 && newC < matrix[0].Length-1 ) {
-            newR++;
-            newC++;
-            // maxD++;
-
-            if (!checkNewRowColumn(matrix, startR, newR, startC, newC)) {
-                return maxD;
-            }
-            maxD++;
-        }
-
-        return maxD;   
-    }
-
-    private bool checkNewRowColumn (char[][] matrix, int startR, int newR, int startC, int newC) {
-        if(matrix[newR][newC] != '1') {
-            return false;
-        }
-
-        for (int r = startR; r<=newR; r++) {
-            if (matrix[r][newC] == '0') {
-                return false;
-            } 
-        }
-
-        for (int c = startC; c<=newC; c++) {
-            if (matrix[newR][c] == '0') {
-                return false;
-            } 
-        }
-
-        return true;
-    }
-
 }
