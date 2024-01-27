@@ -7,42 +7,40 @@ public class Solution {
 
         for(int i = 0; i < r; i++) {
             dp[i] = Enumerable.Repeat(0, c).ToArray();
-            dp[i][0] = (int)(matrix[i][0] - '0');
+            // dp[i][0] = (int)(matrix[i][0] - '0');
 
-            max = Math.Max(max, dp[i][0]);
+            // max = Math.Max(max, dp[i][0]);
         }
 
-        for(int j = 0; j < c; j++) {
-            dp[0][j] = (int)(matrix[0][j] - '0');
+        // for(int j = 0; j < c; j++) {
+        //     dp[0][j] = (int)(matrix[0][j] - '0');
 
-            max = Math.Max(max, dp[0][j]);
-        }
+        //     max = Math.Max(max, dp[0][j]);
+        // }
+
+        // for(int i = 0; i < r; i++) {
+        //     for(int j = 0; j < c; j++) {
+        //     }
+        // }
 
         for(int i = 0; i < r; i++) {
             for(int j = 0; j < c; j++) {
-                // Console.Write($"{dp[i][j]} ");
-            }
-
-            // Console.WriteLine();
-        }
-
-        // Console.WriteLine();
-
-        for(int i = 1; i < r; i++) {
-            for(int j = 1; j < c; j++) {
-                if(matrix[i][j] == '0') {
-                    dp[i][j] = 0;
-                } else {
-                    dp[i][j] = Math.Min(dp[i - 1][j - 1],
-                        Math.Min(dp[i - 1][j], dp[i][j - 1])) + 1;
-
+                if(i == 0 || j == 0) {
+                    dp[i][j] = (int)(matrix[i][j] - '0');
                     max = Math.Max(max, dp[i][j]);
+                } else {
+                    if(matrix[i][j] == '0') {
+                        dp[i][j] = 0;
+                    } else {
+                        dp[i][j] = Math.Min(dp[i - 1][j - 1],
+                            Math.Min(dp[i - 1][j], dp[i][j - 1])) + 1;
+
+                        max = Math.Max(max, dp[i][j]);
+                    }
                 }
 
-                // Console.Write($"{dp[i][j]} ");
+                
             }
-
-            // Console.WriteLine();
         }
 
         return max * max;       
