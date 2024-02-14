@@ -14,9 +14,7 @@ public class Solution {
         if(head == null || n == 0) {
             return head;
         }
-        if(head.next == null && n == 1) {
-            return null;
-        }
+        
         var tmp = head;
         while(tmp != null && n != 0) {
             tmp = tmp.next;
