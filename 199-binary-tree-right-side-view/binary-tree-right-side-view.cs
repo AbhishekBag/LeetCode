@@ -17,7 +17,7 @@
  // 4. BFS => insent a node with it's level into a queue
  // 5. pop from queue
  // 6. if the level is present in visited set, ignore else add it to res
- // 7. all right then left child on the queue with level => current level + 1
+ // 7. if not null. then enqueue right and left child on the queue with level => current level + 1
 public class Solution {
     public IList<int> RightSideView(TreeNode root) {
         List<int> res = new List<int>();
