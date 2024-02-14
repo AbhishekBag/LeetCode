@@ -9,10 +9,6 @@ public class Solution {
                 }
             }
 
-            if(operation == "./") {
-                continue;
-            }
-
             if(!operation.StartsWith('.')) {
                 var childFolder = operation.Split()[0];
                 stk.Push(childFolder);
