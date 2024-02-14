@@ -17,6 +17,7 @@ public class Solution {
                 string predecessor = pred.ToString();
 
                 if(wordChainLength.ContainsKey(predecessor)) {
+                    // wordChainLength[word]++;
                     wordChainLength[word] = Math.Max(wordChainLength[word], wordChainLength[predecessor] + 1);
                     longestChainLength = Math.Max(longestChainLength, wordChainLength[word]);
                 }
