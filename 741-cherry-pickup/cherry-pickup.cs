@@ -43,8 +43,9 @@ public class Solution {
         if(r1 == r2 && c1 == c2) {
             cherries += grid[r1][c1];
             if(r1 == n - 1 && c1 == n -1) {
-                dp[c1][r2][c2] = grid[r1][c1];
-                return dp[c1][r2][c2];
+                // dp[c1][r2][c2] = grid[r1][c1];
+                // return dp[c1][r2][c2];
+                return grid[r1][c1];
             }
             grid[r1][c1] = 0;
         } else {
