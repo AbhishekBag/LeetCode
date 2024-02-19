@@ -2,7 +2,6 @@ public class Solution {
     public int NetworkDelayTime(int[][] times, int n, int k) {
         int[] d = new int[n + 1];
         Queue<int> currentSet = new Queue<int>();
-        // HashSet<int> visited = new HashSet<int>();
         Dictionary<int, List<(int destination, int weight)>> adjList = new Dictionary<int, List<(int destination, int weight)>>();
 
         for(int i = 0; i <= n; i++) {
@@ -14,10 +13,6 @@ public class Solution {
         currentSet.Enqueue(k);
         while(currentSet.Count() > 0) {
             var currentNode = currentSet.Dequeue();
-
-            // if(!visited.Contains(currentNode)) {
-            //     visited.Add(currentNode);                               
-            // }
 
             if(adjList.ContainsKey(currentNode)){
                 var destNodeItems = adjList[currentNode];
