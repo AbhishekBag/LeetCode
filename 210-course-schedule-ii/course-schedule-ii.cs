@@ -4,14 +4,8 @@ public class Solution {
         (Dictionary<int, HashSet<int>> inDeg, Dictionary<int, HashSet<int>> outDeg) = GetDegree(prerequisites);
         Queue<int> independentCourses = new Queue<int>();
 
-        // Console.WriteLine("In degree:");
-        // PrintDeg(inDeg);
-        // Console.WriteLine("Out degree:");
-        // PrintDeg(outDeg);
-
         for(int i = 0; i < numCourses; i++) {
-            if(!inDeg.ContainsKey(i)) {                
-                // Console.WriteLine($"Enqueuing: {i}");
+            if(!inDeg.ContainsKey(i)) {
                 independentCourses.Enqueue(i);
             }
         }
