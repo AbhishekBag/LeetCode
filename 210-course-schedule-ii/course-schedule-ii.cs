@@ -1,97 +1,74 @@
 public class Solution {
     public int[] FindOrder(int numCourses, int[][] prerequisites) {
-        Dictionary<int, List<int>> adjList = new Dictionary<int, List<int>>();
-        Dictionary<int, int> indeg = new Dictionary<int, int>();
-        Queue<int> q = new Queue<int>();
         List<int> res = new List<int>();
+        (Dictionary<int, HashSet<int>> inDeg, Dictionary<int, HashSet<int>> outDeg) = GetDegree(prerequisites);
+        Queue<int> independentCourses = new Queue<int>();
+
+        // Console.WriteLine("In degree:");
+        // PrintDeg(inDeg);
+        // Console.WriteLine("Out degree:");
+        // PrintDeg(outDeg);
 
         for(int i = 0; i < numCourses; i++) {
-            indeg.Add(i, 0);
+            if(!inDeg.ContainsKey(i)) {                
+                // Console.WriteLine($"Enqueuing: {i}");
+                independentCourses.Enqueue(i);
+            }
         }
 
-        foreach(var edge in prerequisites) {
-            int src = edge[1];
-            int dest = edge[0];
-            if(adjList.ContainsKey(src)) {
-                adjList[src].Add(dest);
-            } else {
-                var newList = new List<int>();
-                newList.Add(dest);
-                adjList.Add(src, newList);
-            }
+        while(independentCourses.Count() > 0) {
+            var currentCourse = independentCourses.Dequeue();
+            res.Add(currentCourse);
 
-            if(indeg.ContainsKey(dest)) {
-                indeg[dest]++;
-            }
-            // else {
-            //     indeg.Add(dest, 1);
-            // }
-        }
-
-        ScanIndeg(indeg, q);
-        // DisplayIndeg(indeg);
-        // DisplayAdjList(adjList);
-
-        while(q.Count() > 0) {
-            // DisplayQ(q);
-            var pop = q.Dequeue();
-            // Console.WriteLine($"poped: {pop}");
-            res.Add(pop);
-            if(adjList.ContainsKey(pop)) {
-                foreach(var item in adjList[pop]) {
-                    indeg[item]--;
-                    if(indeg[item] == 0) {
-                        q.Enqueue(item);
-                    }
+            if(outDeg.ContainsKey(currentCourse)) {
+                var possibleCourses = outDeg[currentCourse];
+                foreach(var pCourse in possibleCourses) {
+                    if(inDeg.ContainsKey(pCourse)) {
+                        if(inDeg[pCourse].Count() == 1) {
+                            inDeg.Remove(pCourse);
+                            independentCourses.Enqueue(pCourse);
+                        } else {
+                            inDeg[pCourse].Remove(currentCourse);
+                        }
+                    }                
                 }
+            }            
+        }
+
+        return res.Count() == numCourses ? res.ToArray() : new int[]{};
+    }
+
+    private (Dictionary<int, HashSet<int>>, Dictionary<int, HashSet<int>>) GetDegree(int[][] prerequisites) {
+        Dictionary<int, HashSet<int>> inDeg = new Dictionary<int, HashSet<int>>();
+        Dictionary<int, HashSet<int>> outDeg = new Dictionary<int, HashSet<int>>();
+        foreach(var course in prerequisites) {
+            var c = course[0];
+            var d = course[1];
+            if(!inDeg.ContainsKey(c)) {
+                inDeg[c] = new HashSet<int>();
             }
-        }
 
-        if(res.Count() == numCourses) {
-            return res.ToArray();
-        }
+            inDeg[c].Add(d);
 
-        return new int[0];
-    }
-
-    private void ScanIndeg(Dictionary<int, int> indeg, Queue<int> q) {
-        foreach(var item in indeg) {
-            if(item.Value == 0) {
-                q.Enqueue(item.Key);
+            if(!outDeg.ContainsKey(d)) {
+                outDeg[d] = new HashSet<int>();
             }
-        }
-    }
 
-    private void DisplayIndeg(Dictionary<int, int> indeg) {
-        Console.WriteLine("Indegree List:");
-        foreach(var item in indeg) {
-            Console.WriteLine($"key: {item.Key}: {item.Value}");
+            outDeg[d].Add(c);
         }
 
-        Console.WriteLine();
+        return (inDeg, outDeg);
     }
 
-    private void DisplayAdjList(Dictionary<int, List<int>> adjList) {        
-        Console.WriteLine("Adj List:");
-        foreach(var item in adjList) {
-            Console.Write($"src: {item.Key}: ");
-            foreach(var dst in item.Value) {
-                Console.Write($"{dst},");
+    private void PrintDeg(Dictionary<int, HashSet<int>> deg) {
+        foreach(var item in deg) {
+            Console.WriteLine(item.Key + ": ");
+            foreach(var n in item.Value) {
+                Console.Write($"{n}, ");
             }
 
             Console.WriteLine();
             Console.WriteLine();
         }
-        
-        Console.WriteLine();
-    }
-
-    private void DisplayQ(Queue<int> q) {
-        Console.WriteLine("Queue Contains:");
-        foreach(var item in q) {
-            Console.WriteLine($"{item}");
-        }
-
-        Console.WriteLine();
     }
 }
