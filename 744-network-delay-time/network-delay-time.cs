@@ -35,7 +35,6 @@ public class Solution {
 
         var mCost = 0;
         for(int i = 1; i <= n; i++) {
-            // Console.WriteLine($"d[{i}]: {d[i]}");
             mCost = Math.Max(mCost, d[i]);
         }
 
