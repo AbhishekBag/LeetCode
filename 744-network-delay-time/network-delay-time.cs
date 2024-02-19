@@ -1,67 +1,73 @@
 public class Solution {
     public int NetworkDelayTime(int[][] times, int n, int k) {
-        if(n == 1) {
-            return 0;
-        }
-
         int[] d = new int[n + 1];
+        Queue<int> currentSet = new Queue<int>();
         HashSet<int> visited = new HashSet<int>();
-        PriorityQueue<int, int> q = new PriorityQueue<int, int>();
-        Dictionary<int, List<Edge>> eMap = new Dictionary<int, List<Edge>>();
+        Dictionary<int, List<(int destination, int weight)>> adjList = new Dictionary<int, List<(int destination, int weight)>>();
 
         for(int i = 0; i <= n; i++) {
             d[i] = Int32.MaxValue;
         }
 
-        for(int i = 0; i < times.Length; i++) {
-            int s = times[i][0];
-            int ds = times[i][1];
-            int w = times[i][2];
-            if(eMap.ContainsKey(s)) {
-                eMap[s].Add(new Edge(s, ds, w));
-            } else {
-                var edges = new List<Edge>();
-                edges.Add(new Edge(s, ds, w));
-                eMap.Add(s, edges);
-            }
-        }
-
+        adjList = GetAdjList(times);
         d[k] = 0;
-        q.Enqueue(k, 0);
-        while(q.Count > 0 && visited.Count() < n) {
-            var poped = q.Dequeue();
-            if(!visited.Contains(poped)) {
-                visited.Add(poped);
+        currentSet.Enqueue(k);
+        while(currentSet.Count() > 0) {
+            var currentNode = currentSet.Dequeue();
+
+            if(!visited.Contains(currentNode)) {
+                visited.Add(currentNode);                               
             }
 
-            if(eMap.ContainsKey(poped)) {
-                var edges = eMap[poped];
-                foreach(var edge in edges) {
-                    if(d[edge.d] > d[edge.s] + edge.w) {
-                        d[edge.d] = d[edge.s] + edge.w;
-                        q.Enqueue(edge.d, d[edge.d]);
+            if(adjList.ContainsKey(currentNode)){
+                var destNodeItems = adjList[currentNode];
+                foreach(var nextNodeItem in destNodeItems) {
+                    var nextNode = nextNodeItem.destination;
+                    var nextWeight = nextNodeItem.weight;
+
+                    if(d[nextNode] > nextWeight + d[currentNode]) {
+                        d[nextNode] = nextWeight + d[currentNode];
+                        currentSet.Enqueue(nextNode);
                     }
                 }
-            }
+            } 
         }
 
-        int mCost = 0;
+        var mCost = 0;
         for(int i = 1; i <= n; i++) {
+            // Console.WriteLine($"d[{i}]: {d[i]}");
             mCost = Math.Max(mCost, d[i]);
         }
 
         return mCost == Int32.MaxValue ? -1 : mCost;
     }
-}
 
-public class Edge {
-    public int s;
-    public int d;
-    public int w;
+    private Dictionary<int, List<(int, int)>> GetAdjList(int[][] times) {
+        Dictionary<int, List<(int destination, int weight)>> adjList = new Dictionary<int, List<(int destination, int weight)>>();
 
-    public Edge(int _s, int _d, int _w) {
-        s = _s;
-        d = _d;
-        w = _w;
+        foreach(var item in times) {
+            var source = item[0];
+            var dest = item[1];
+            var weight = item[2];
+
+            if(!adjList.ContainsKey(source)) {
+                adjList[source] = new List<(int, int)>();
+            }
+
+            adjList[source].Add((dest, weight));
+        }
+        
+        return adjList;
+    }
+
+    private void DisplayAdjList(Dictionary<int, List<(int destination, int weight)>> adjList) {
+        foreach(var item in adjList) {
+            Console.Write($"{item.Key}: ");
+            foreach(var node in item.Value) {
+                Console.Write($"({node.destination} => {node.weight}), ");
+            }
+
+            Console.WriteLine();
+        }
     }
 }
