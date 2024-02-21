@@ -36,18 +36,18 @@ public class TopVotedCandidate {
         int i = 0;
         int j = times.Length - 1;
 
-        while(i < j) {
-            int mid = (i + j + 1) / 2;
+        while(i <= j) {
+            int mid = i + (j - i) / 2;
             if(times[mid] == time) {
                 return mid;
             } else if(time > times[mid]) {
-                i = mid;
+                i = mid + 1;
             } else {
                 j = mid - 1;
             }
         }
 
-        return i;
+        return i - 1;
     }
     
     /*
