@@ -4,24 +4,22 @@ public class Solution {
         int n = s.Length;
 
         for(int i = 0; i < n; i++) {
-            int l = i;
-            int r = i;
-
-            while(l >= 0 && r < n && s[l] == s[r]) {
-                count++;
-                l--;
-                r++;
-            }
-
-            l = i;
-            r = i + 1;
-            while(l >= 0 && r < n && s[l] == s[r]) {
-                count++;
-                l--;
-                r++;
-            } 
+            count += CountPalindromicSubstrings(s, i, i);
+            count += CountPalindromicSubstrings(s, i, i + 1);            
         }
 
         return count++;
+    }
+
+    private int CountPalindromicSubstrings(string s, int l, int r) {
+        int count = 0;
+        int n = s.Length;
+        while(l >= 0 && r < n && s[l] == s[r]) {
+            count++;
+            l--;
+            r++;
+        }
+
+        return count; 
     }
 }
