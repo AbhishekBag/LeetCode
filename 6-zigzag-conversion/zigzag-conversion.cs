@@ -3,7 +3,7 @@ public class Solution {
         if(numRows == 1) {
             return s;
         }
-        
+
         List<char>[] arr = new List<char>[numRows];
         for(int i = 0; i < numRows; i++) {
             arr[i] = new List<char>();
@@ -11,21 +11,19 @@ public class Solution {
 
         int j = 0;
         bool increase = true;
+        int incr = 1;
+        int curRow = 0;
         for(int i = 0; i < s.Length; i++) {
-            // Console.WriteLine($"j: {j}; increase: {increase}");
-            
-            if(increase && j < numRows - 1) {
-                arr[j].Add(s[i]);
-                j++;
-            } else if(increase && j == numRows - 1) {
-                arr[j--].Add(s[i]);
-                increase = false;
-            } else if(!increase && j > 0) {
-                arr[j--].Add(s[i]);
-            } else if(!increase && j == 0) {
-                arr[j++].Add(s[i]);
-                increase = true;
+            arr[curRow].Add(s[i]);
+            if(curRow == 0) {
+                incr = 1;
             }
+
+            if(curRow == numRows - 1) {
+                incr = -1;
+            }
+
+            curRow += incr;
         }
         // Console.WriteLine("aa");
 
