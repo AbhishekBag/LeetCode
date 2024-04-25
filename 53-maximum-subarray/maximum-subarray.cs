@@ -13,6 +13,5 @@ public class Solution {
         }
 
         return maxSum;
-        // return Math.Max(maxSum, nums[nums.Length - 1]);
     }
 }
