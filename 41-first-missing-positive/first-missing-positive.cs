@@ -9,7 +9,7 @@ public class Solution {
         int i = 0;
         for(; i < nums.Length; i++) {
             if(nums[i] > 0 && nums[i] < 100001) {
-                Console.WriteLine($"Processing i: {i}, nums[i]: {nums[i]}");
+                // Console.WriteLine($"Processing i: {i}, nums[i]: {nums[i]}");
                 arr[nums[i]] = nums[i];
             }                
         }
