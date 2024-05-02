@@ -41,21 +41,21 @@ public class Edge {
         w = _w;
     }
 
-    public override int GetHashCode()
-    {
-        return v1.GetHashCode() ^ v2.GetHashCode();
-    }
+    // public override int GetHashCode()
+    // {
+    //     return v1.GetHashCode() ^ v2.GetHashCode();
+    // }
 
-    public override bool Equals(object? obj)
-    {
-        if(obj is Edge)
-        {
-            var other = (Edge)obj;
-            return v1.Equals(other.v1) && v2.Equals(other.v2);
-        }
+    // public override bool Equals(object? obj)
+    // {
+    //     if(obj is Edge)
+    //     {
+    //         var other = (Edge)obj;
+    //         return v1.Equals(other.v1) && v2.Equals(other.v2);
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 }
 
 public class DisjointSet {
