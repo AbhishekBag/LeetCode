@@ -8,7 +8,6 @@ public class Solution {
             Array.Sort(chars);
             string sortedStr = new string(chars);
 
-            // Console.WriteLine($"actual: {str}, sorted: {sortedStr}");
             if(map.ContainsKey(sortedStr)) {
                 map[sortedStr].Add(str);
             } else {
@@ -16,10 +15,6 @@ public class Solution {
             }
         }
 
-        foreach(var item in map) {
-            res.Add(item.Value);
-        }
-
-        return res;
+        return map.Values.ToList<IList<string>>();
     }
 }
