@@ -1,6 +1,5 @@
 public class Solution {
     public int Reverse(int x) {
-        bool isNegetive = x < 0 ? true : false;
         int res = 0;
         int tmp = 0;
 
@@ -8,8 +7,6 @@ public class Solution {
         if (x == int.MinValue) {
             return 0;
         }
-
-        // x = Math.Abs(x);
 
         while(x != 0) {
             int rem = x%10;
@@ -24,12 +21,6 @@ public class Solution {
 
             //Console.WriteLine($"x: {x}, res: {res}");
         }
-
-        // if(res < 0 && isNegetive) {
-        //     return 0;
-        // }
-
-        // return isNegetive ? -1 * res : res;
 
         return res;
     }
