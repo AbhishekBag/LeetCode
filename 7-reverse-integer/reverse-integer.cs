@@ -9,7 +9,7 @@ public class Solution {
             return 0;
         }
 
-        x = Math.Abs(x);
+        // x = Math.Abs(x);
 
         while(x != 0) {
             int rem = x%10;
@@ -22,13 +22,15 @@ public class Solution {
 
             res = tmp;
 
-            // Console.WriteLine($"x: {x}, res: {res}");
+            //Console.WriteLine($"x: {x}, res: {res}");
         }
 
-        if(res < 0 && isNegetive) {
-            return 0;
-        }
+        // if(res < 0 && isNegetive) {
+        //     return 0;
+        // }
 
-        return isNegetive ? -1 * res : res;
+        // return isNegetive ? -1 * res : res;
+
+        return res;
     }
 }
