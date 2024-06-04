@@ -38,7 +38,6 @@ public class Solution {
                             indeg[item]--;
                             if(indeg[item] == 0) {
                                 available.Enqueue(item);
-                                // indeg.Remove(item);
                             }
                         }
                     }
