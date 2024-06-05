@@ -1,47 +1,47 @@
 public class Trie {
 
-    public Trie[] root;
-    public bool isEnd;
+    private Trie[] node;
+    private bool isWord;
 
     public Trie() {
-        root = new Trie[26];
-        isEnd = false;
+        node = new Trie[26];
+        isWord = false;
     }
     
     public void Insert(string word) {
-        var tr = this;
+        Trie root = this;
         foreach(char c in word) {
-            if(tr.root[c - 'a'] == null) {
-                tr.root[c - 'a'] = new Trie();
+            if(root.node[c - 'a'] == null) {
+                root.node[c - 'a'] = new Trie();
             }
-            
-            tr = tr.root[c - 'a'];
+
+            root = root.node[c - 'a'];
         }
 
-        tr.isEnd = true;
+        root.isWord = true;
     }
     
     public bool Search(string word) {
-        var tr = this;
+        Trie cur = this;
         foreach(char c in word) {
-            if(tr.root[c - 'a'] == null) {
+            if(cur.node[c - 'a'] == null) {
                 return false;
-            } else {
-                tr = tr.root[c - 'a'];
             }
+
+            cur = cur.node[c - 'a'];
         }
 
-        return tr.isEnd;
+        return cur.isWord;
     }
     
     public bool StartsWith(string prefix) {
-        var tr = this;
+        Trie cur = this;
         foreach(char c in prefix) {
-            if(tr.root[c - 'a'] == null) {
+            if(cur.node[c - 'a'] == null) {
                 return false;
-            } else {
-                tr = tr.root[c - 'a'];
             }
+
+            cur = cur.node[c - 'a'];
         }
 
         return true;
