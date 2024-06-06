@@ -16,15 +16,16 @@ public class Solution {
         return ValidateBST(root, null, null);
     }
 
-    public bool ValidateBST(TreeNode root, TreeNode min, TreeNode max) {
+    private bool ValidateBST(TreeNode root, TreeNode min, TreeNode max) {
         if(root == null) {
             return true;
         }
 
-        if(min != null && min.val >= root.val) {
+        if(min != null && root.val <= min.val) {
             return false;
         }
-        if(max != null && max.val <= root.val) {
+
+        if(max != null && root.val >= max.val) {
             return false;
         }
 
