@@ -29,22 +29,20 @@ public class Solution {
             int r = s[i] - 'a';                 // char coming inside the window
             int l = s[i - p.Length] - 'a';      // char going out of the window
 
-            if(pMap[r] == sMap[r]) {
-                matches--;
-            }
-
+            // Update the right character
             sMap[r]++;
-            if(pMap[r] == sMap[r]) {
+            if (sMap[r] == pMap[r]) {
                 matches++;
-            }
-
-            if(pMap[l] == sMap[l]) {
+            } else if (sMap[r] == pMap[r] + 1) {
                 matches--;
             }
 
+            // Update the left character
             sMap[l]--;
-            if(pMap[l] == sMap[l]) {
+            if (sMap[l] == pMap[l]) {
                 matches++;
+            } else if (sMap[l] == pMap[l] - 1) {
+                matches--;
             }
 
             if(matches == 26) {
