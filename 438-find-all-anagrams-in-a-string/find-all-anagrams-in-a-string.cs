@@ -1,64 +1,57 @@
 public class Solution {
-    public IList<int> FindAnagrams(string s, string p) {        
-        Dictionary<char, int> pMap = new Dictionary<char, int>();
-        Dictionary<char, int> sMap = new Dictionary<char, int>();
+    public IList<int> FindAnagrams(string s, string p) {
         List<int> res = new List<int>();
-
         if(s.Length < p.Length) {
             return res;
         }
-        
-        pMap = FindCharMap(p, p.Length);
-        sMap = FindCharMap(s, p.Length);
 
-        if(IsAnagram(pMap, sMap)) {
+        int[] pMap = new int[26];
+        int[] sMap = new int[26];
+
+        for(int i = 0; i < p.Length; i++) {
+            pMap[p[i] - 'a']++;
+            sMap[s[i] - 'a']++;
+        }
+
+        int matches = 0;
+        for(int i = 0; i < 26; i++) {
+            if(pMap[i] == sMap[i]) {
+                matches++;
+            }
+        }
+
+        if(matches == 26) {
             res.Add(0);
         }
 
+        // Sliding window processing
         for(int i = p.Length; i < s.Length; i++) {
-            char c = s[i];
-            if(sMap.ContainsKey(c)) {
-                sMap[c]++;
-            } else {
-                sMap[c] = 1;
+            int r = s[i] - 'a';                 // char coming inside the window
+            int l = s[i - p.Length] - 'a';      // char going out of the window
+
+            if(pMap[r] == sMap[r]) {
+                matches--;
             }
 
-            char cPrev = s[i - p.Length];
-            if(sMap.ContainsKey(cPrev) && sMap[cPrev] == 1) {
-                sMap.Remove(cPrev);
-            } else {
-                sMap[cPrev]--;
+            sMap[r]++;
+            if(pMap[r] == sMap[r]) {
+                matches++;
             }
 
-            if(IsAnagram(pMap, sMap)) {
+            if(pMap[l] == sMap[l]) {
+                matches--;
+            }
+
+            sMap[l]--;
+            if(pMap[l] == sMap[l]) {
+                matches++;
+            }
+
+            if(matches == 26) {
                 res.Add(i - p.Length + 1);
             }
         }
 
         return res;
-    }
-
-    private bool IsAnagram(Dictionary<char, int> pMap, Dictionary<char, int> sMap) {
-        foreach(var item in pMap) {
-            if(!sMap.ContainsKey(item.Key) || sMap[item.Key] != item.Value) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private Dictionary<char, int> FindCharMap(string str, int l) {
-        Dictionary<char, int> cMap = new Dictionary<char, int>();
-        for(int i = 0; i < l; i++) {
-            char c = str[i];
-            if(cMap.ContainsKey(c)) {
-                cMap[c]++;
-            } else {
-                cMap[c] = 1;
-            }
-        }
-
-        return cMap;
     }
 }
