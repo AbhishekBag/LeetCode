@@ -1,34 +1,27 @@
 public class Solution {
     public int[] TopKFrequent(int[] nums, int k) {        
+        var map = new Dictionary<int, int>();
         List<int> res = new List<int>();
-        Dictionary<int,int> frequencyMap = new Dictionary<int, int>();
+
         foreach(var num in nums) {
-            if(!frequencyMap.ContainsKey(num)) {
-                frequencyMap[num] = 0;
+            if(!map.ContainsKey(num)) {
+                map[num] = 0;
             }
 
-            frequencyMap[num]++;
+            map[num]++;
         }
 
-        // Comparer<int>.Create((x, y) => y.CompareTo(x))
-        PriorityQueue<int, int> map = new PriorityQueue<int, int>();
-        foreach(var item in frequencyMap) {
-            map.Enqueue(item.Key, item.Value);
-            if(map.Count > k) {
-                map.Dequeue();
+        map = map.OrderByDescending(e => e.Value)
+                .ToDictionary(i => i.Key, i => i.Value);
+
+        foreach(var item in map) {
+            if(k == 0) {
+                break;
             }
-        }
 
-        for(int i = 0; i < k; i++) {
-            var poped = map.Dequeue();
-            res.Add(poped);
+            k--;
+            res.Add(item.Key);
         }
-
-        // var freqList = frequencyMap.Select(x => (x.Key, x.Value)).ToList();
-        // freqList.Sort((a, b) => b.Item2.CompareTo(a.Item2));
-        // for(int i = 0; i < k; i++) {
-        //     res.Add(freqList[i].Item1);
-        // }
 
         return res.ToArray();
     }
