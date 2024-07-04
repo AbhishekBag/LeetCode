@@ -5,11 +5,10 @@ public class Solution {
         int n = nums.Length;
 
         for(int i = 0; i < n; i++) {
-            int item = nums[i];
-            max = Math.Max(max, curSum + item);
+            max = Math.Max(max, curSum + nums[i]);
 
-            if(curSum + item > 0) {
-                curSum += item;
+            if(curSum + nums[i] > 0) {
+                curSum += nums[i];
             } else {
                 curSum = 0;
             }
