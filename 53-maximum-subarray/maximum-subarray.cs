@@ -3,11 +3,11 @@ public class Solution {
         int max = nums[0];
         int curSum = 0;
 
-        foreach(int num in nums) {
-            max = Math.Max(max, curSum + num);
+        for(int i = 0; i < nums.Length; i++) {
+            max = Math.Max(max, curSum + nums[i]);
 
-            if(curSum + num > 0) {
-                curSum += num;
+            if(curSum + nums[i] > 0) {
+                curSum += nums[i];
             } else {
                 curSum = 0;
             }
