@@ -17,26 +17,20 @@ public class Solution {
         if(list2 == null) {
             return list1;
         }
+        ListNode newHead = null;
+        ListNode tmp = null;
 
-        ListNode head = null, tmp = null;
         if(list1.val > list2.val) {
-            head = list2;
+            newHead = list2;
             list2 = list2.next;
         } else {
-            head = list1;
+            newHead = list1;
             list1 = list1.next;
         }
 
-        tmp = head;
-        while(tmp != null) {
-            if(list1 == null) {
-                tmp.next = list2;
-                break;
-            }
-            if(list2 == null) {
-                tmp.next = list1;
-                break;
-            }
+        tmp = newHead;
+
+        while(list1 != null && list2 != null) {
             if(list1.val > list2.val) {
                 tmp.next = list2;
                 list2 = list2.next;
@@ -48,6 +42,8 @@ public class Solution {
             tmp = tmp.next;
         }
 
-        return head;
+        tmp.next = list1 == null ? list2 : list1;
+
+        return newHead;
     }
 }
