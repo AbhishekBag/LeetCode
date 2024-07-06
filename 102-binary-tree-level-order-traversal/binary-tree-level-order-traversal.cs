@@ -24,7 +24,7 @@ public class Solution {
 
         while(queue.Count > 0) {
             var poped = queue.Dequeue();
-            if(res.Count == 0 || res.Count == poped.level) {
+            if(res.Count == poped.level) {
                 res.Add(new List<int>() { poped.node.val });
             } else {
                 res.LastOrDefault().Add(poped.node.val);
