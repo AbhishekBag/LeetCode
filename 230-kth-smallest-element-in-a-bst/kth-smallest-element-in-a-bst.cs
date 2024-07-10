@@ -13,10 +13,30 @@
  */
 public class Solution {
     public int KthSmallest(TreeNode root, int k) {
-        List<int> items = new List<int>();
+        // List<int> items = new List<int>();
         Stack<TreeNode> collection = new Stack<TreeNode>();
-        HashSet<TreeNode> visited = new HashSet<TreeNode>();
+        // HashSet<TreeNode> visited = new HashSet<TreeNode>();
 
+        var cur = root;
+        int n = 0;
+        while(n < k) {
+            while(cur != null) {
+                collection.Push(cur);
+                cur = cur.left;
+            }
+
+            cur = collection.Pop();
+            n++;
+            if(n == k) {
+                return cur.val;
+            }
+
+            cur = cur.right;
+        }
+
+        return -1;
+
+        /*
         if(root != null) {
             collection.Push(root);
             visited.Add(root);
@@ -45,7 +65,7 @@ public class Solution {
 
         return items[k - 1];
 
-
+        */
         /*
         VisitBST(root, items, k);
 
