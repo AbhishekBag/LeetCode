@@ -20,6 +20,6 @@ public class Solution {
             return root;
         }
 
-        return left == null ? right : left;
+        return left ?? right;
     }
 }
