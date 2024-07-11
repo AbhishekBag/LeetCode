@@ -1,7 +1,7 @@
 public class Solution {
     public int MaxSubArray(int[] nums) {
+        int maxSum = nums[0];
         int curSum = nums[0];
-        int max = curSum;
 
         for(int i = 1; i < nums.Length; i++) {
             if(curSum < 0) {
@@ -9,9 +9,9 @@ public class Solution {
             }
 
             curSum += nums[i];
-            max = Math.Max(max, curSum);
+            maxSum = Math.Max(maxSum, curSum);
         }
 
-        return max;
+        return maxSum;
     }
 }
