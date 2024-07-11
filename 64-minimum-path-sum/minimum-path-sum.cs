@@ -1,38 +1,47 @@
 public class Solution {
-    private int minSum = Int32.MaxValue;
     public int MinPathSum(int[][] grid) {
         int n = grid.Length;
         int m = grid[0].Length;
+
         int[][] mem = new int[n][];
 
         for(int i = 0; i < n; i++) {
-            mem[i] = Enumerable.Repeat(-1, m).ToArray();
+            mem[i] = Enumerable.Repeat(0, m).ToArray();
+            // mem[i][0] = grid[i][0];
+        }
+        
+        int sum = 0;
+        for(int i = 0; i < m; i++) {
+            sum += grid[0][i];
+            mem[0][i] = sum;
         }
 
-        return GetMinSum(grid, 0, 0, mem);
+        sum = 0;
+        for(int i = 0; i < n; i++) {
+            sum += grid[i][0];
+            mem[i][0] = sum;
+        }
+
+        for(int  i = 1; i < n; i++) {
+            for(int j = 1; j < m; j++) {
+                mem[i][j] = Math.Min(mem[i - 1][j], mem[i][j - 1]) + grid[i][j];
+            }
+        }
+
+        display(mem);
+
+        return mem[n -1][m - 1];
     }
 
-    private int GetMinSum(int[][] grid, int i, int j, int[][] mem) {
-        int n = grid.Length;
-        int m = grid[0].Length;
+    private void display(int[][] mem) {
+        int n = mem.Length;
+        int m = mem[0].Length;
+        for(int  i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                Console.Write($"{mem[i][j]} ");
+            }
 
-        if(i < 0 || i >= n || j < 0 || j >= m) {
-            return Int32.MaxValue;
+            Console.WriteLine();
         }
-
-        if(i == n - 1 && j == m - 1) {
-            return grid[i][j];
-        }
-
-        if(mem[i][j] != -1) {
-            return mem[i][j];
-        }
-
-        int bottomSum = GetMinSum(grid, i + 1, j, mem);
-        int rightSum = GetMinSum(grid, i, j + 1, mem);
-
-        mem[i][j] = Math.Min(bottomSum, rightSum) + grid[i][j];
-
-        return mem[i][j];
     }
 }
