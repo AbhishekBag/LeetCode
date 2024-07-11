@@ -1,9 +1,9 @@
 public class Solution {
     public int MaxSubArray(int[] nums) {
-        int maxSum = nums[0];
-        int curSum = nums[0];
+        int maxSum = Int32.MinValue;
+        int curSum = 0;
 
-        for(int i = 1; i < nums.Length; i++) {
+        for(int i = 0; i < nums.Length; i++) {
             if(curSum < 0) {
                 curSum = 0;
             }
