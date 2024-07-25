@@ -10,8 +10,6 @@ public class Solution {
                     continue;
                 }
 
-                Console.WriteLine($"i: {i}, j: {j}");
-
                 if(companies[i].IsSubsetOf(companies[j])) {
                     isSubset = true;
                     break;
