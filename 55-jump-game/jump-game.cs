@@ -7,18 +7,30 @@ public class Solution {
         }
 
         possible.Add(n-1);
+        int lastAdded = n - 1;
 
         for(int i = n - 2; i >= 0; i--) {
             for(int j = nums[i]; j > 0; j--) {
                 int jump = i + j;
-                if(possible.Contains(jump) || jump >= n) {
-                    possible.Add(i);
+                // if(possible.Contains(jump) || jump >= n) {
+                //     possible.Add(i);
+                //     lastAdded = i;
+                //     break;
+                // }
+
+                if(jump >= lastAdded) {
+                    lastAdded = i;
+                    break;
+                }
+
+                if(jump < lastAdded) {
                     break;
                 }
             }
         }
 
-        return possible.Contains(0);
+        // return possible.Contains(0);
+        return lastAdded == 0;
     }
 }
 
