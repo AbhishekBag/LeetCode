@@ -10,8 +10,8 @@ public class Solution {
         int lastAdded = n - 1;
 
         for(int i = n - 2; i >= 0; i--) {
-            for(int j = nums[i]; j > 0; j--) {
-                int jump = i + j;
+            // for(int j = nums[i]; j > 0; j--) {
+                int jump = i + nums[i];
                 // if(possible.Contains(jump) || jump >= n) {
                 //     possible.Add(i);
                 //     lastAdded = i;
@@ -20,13 +20,13 @@ public class Solution {
 
                 if(jump >= lastAdded) {
                     lastAdded = i;
-                    break;
+                    // break;
                 }
 
-                if(jump < lastAdded) {
-                    break;
-                }
-            }
+                // if(jump < lastAdded) {
+                //     break;
+                // }
+            // }
         }
 
         // return possible.Contains(0);
