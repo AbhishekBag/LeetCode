@@ -1,12 +1,12 @@
 public class Solution {
     public bool CanJump(int[] nums) {
-        HashSet<int> possible = new HashSet<int>();
+        // HashSet<int> possible = new HashSet<int>();
         int n = nums.Length;
         if(n == 1) {
             return true;
         }
 
-        possible.Add(n-1);
+        // possible.Add(n-1);
         int lastAdded = n - 1;
 
         for(int i = n - 2; i >= 0; i--) {
