@@ -1,45 +1,58 @@
 public class Solution {
     public int Search(int[] nums, int target) {
-        int pivot = GetPivot(nums);
+        int n = nums.Length;
+        if(n <= 1) {
+            return nums[n - 1] == target ? n - 1 : -1;
+        }
 
-        // Console.WriteLine($"pivot: {pivot}");
-
-        int leftSearch = Find(nums, target, 0, pivot - 1);
-        int rightSearch = Find(nums, target, pivot, nums.Length - 1);
+        int minPivot = GetMinPivot(nums);
+        int leftSearch = BinarySearch(nums, 0, minPivot - 1, target);
+        int rightSearch = BinarySearch(nums, minPivot, n - 1, target);
 
         return leftSearch == -1 ? rightSearch : leftSearch;
     }
 
-    private int GetPivot(int[] nums) {
-        int i = 0, j = nums.Length - 1;
+    private int BinarySearch(int[] nums, int start, int end, int target) {
+        int n = nums.Length;
+        if(start >= n || end < 0) {
+            return -1;
+        }
+        if(start == end && nums[start] == target) {
+            return start;
+        }
 
+        int i = start, j = end;
         while(i <= j) {
             int mid = i + (j - i)/2;
-            if(nums[nums.Length - 1] < nums[mid]) {
+            if(nums[mid] == target) {
+                return mid;
+            } else if(nums[mid] < target) {
                 i = mid + 1;
             } else {
                 j = mid - 1;
             }
         }
 
-        return i;
+        return -1;
     }
 
-    private int Find(int[] nums, int target, int start, int end) {
-        while(start <= end) {
-            int mid = start + (end - start)/2;
-            // Console.WriteLine($"Searching for: {target}, start: {start}, end: {end}, mid: {mid}");
-            if(nums[mid] == target) {
-                return mid;
-            }
+    private int GetMinPivot(int[] nums) {
+        int n = nums.Length;
 
-            if(nums[mid] < target) {
-                start = mid + 1;
-            } else {
-                end = mid - 1;
+        if(n <= 1) {
+            return 0;
+        }
+
+        int i = 0, j = n - 1;
+        while(i < j) {
+            int mid = i + (j - i)/2;
+            if(nums[mid] < nums[j]) {
+                j = mid;
+            } else if (nums[mid] > nums[j]) {
+                i = mid + 1;
             }
         }
 
-        return -1;
+        return i;
     }
 }
