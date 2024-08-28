@@ -1,13 +1,16 @@
 public class Solution {
     public bool ContainsDuplicate(int[] nums) {
-        HashSet<int> map = new HashSet<int>();
+        if(nums.Length <= 1) {
+            return false;
+        }
 
+        HashSet<int> collection = new HashSet<int>();
         foreach(int item in nums) {
-            if(map.Contains(item)) {
+            if(collection.Contains(item)) {
                 return true;
             }
 
-            map.Add(item);
+            collection.Add(item);
         }
 
         return false;
