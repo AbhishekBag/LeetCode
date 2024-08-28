@@ -1,17 +1,30 @@
 public class Solution {
     public int MaxSubArray(int[] nums) {
-        int maxSum = Int32.MinValue;
-        int curSum = 0;
-
-        for(int i = 0; i < nums.Length; i++) {
-            if(curSum < 0) {
-                curSum = 0;
-            }
-
-            curSum += nums[i];
-            maxSum = Math.Max(maxSum, curSum);
+        int n = nums.Length;
+        if(n <= 1) {
+            return nums[0];
         }
 
-        return maxSum;
+        int max = Int32.MinValue, sum = 0;
+
+        foreach(int item in nums) {
+            if(sum < 0) {
+                sum = 0;
+            }
+
+            sum += item;
+            max = Math.Max(max, sum);
+        }
+
+        return max;
     }
 }
+
+/*
+-2,1,-3,4,-1,2,1,-5,4
+sum = -2
+
+
+
+
+*/
