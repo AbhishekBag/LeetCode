@@ -16,10 +16,24 @@ public class Solution {
             return head;
         }
 
-        head = ReverseRecursion(head);
+        // Iterative approach
+        ListNode prev = head;
+        ListNode cur = head.next;
         head.next = null;
+        while(cur != null) {
+            var tmp = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = tmp;
+        }
 
-        return start;
+        return prev;
+
+        // Recursive approach
+        // head = ReverseRecursion(head);
+        // head.next = null;
+
+        // return start;
     }
 
     private ListNode ReverseRecursion(ListNode node) {
