@@ -10,21 +10,27 @@
  * }
  */
 public class Solution {
+    ListNode start = null;
     public ListNode ReverseList(ListNode head) {
-        if(head == null || head.next == null) {
+        if(head == null) {
             return head;
         }
 
-        ListNode cur = head;
-        ListNode prev = null;
-        while(cur != null) {
-            // Console.WriteLine($"cur: {cur.val}, next: {prev.val}");
-            var next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
+        head = ReverseRecursion(head);
+        head.next = null;
+
+        return start;
+    }
+
+    private ListNode ReverseRecursion(ListNode node) {
+        if(node.next == null) {
+            start = node;
+            return node;
         }
 
-        return prev;
+        var ret = ReverseRecursion(node.next);
+        ret.next = node;
+
+        return node;
     }
 }
