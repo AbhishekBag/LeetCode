@@ -5,10 +5,10 @@ public class Solution {
             return n;
         }
 
-        int cur = 1;
-        int prev1 = 1, prev2 = 0;
+        int cur = 0;
+        int prev1 = 2, prev2 = 1;
 
-        for(int i = 1; i <= n; i++) {
+        for(int i = 3; i <= n; i++) {
             cur = prev1 + prev2;
             prev2 = prev1;
             prev1 = cur;
