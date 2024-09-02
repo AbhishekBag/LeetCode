@@ -1,8 +1,23 @@
 public class Solution {
     private int[] dp;
     public int ClimbStairs(int n) {
-        dp = new int[n + 1];
-        return CountPaths(n);
+        if(n <= 2) {
+            return n;
+        }
+
+        int cur = 1;
+        int prev1 = 1, prev2 = 0;
+
+        for(int i = 1; i <= n; i++) {
+            cur = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = cur;
+        }
+
+        return cur;
+
+        // dp = new int[n + 1];
+        // return CountPaths(n);
     }
 
     private int CountPaths(int n) {
