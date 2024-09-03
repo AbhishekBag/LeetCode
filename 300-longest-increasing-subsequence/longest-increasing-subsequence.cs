@@ -5,11 +5,7 @@ public class Solution {
         map[nums.Length - 1] = 1;
         for(int i = nums.Length - 2; i >= 0; i--) {
             var val = FindMaxMatchingValue(nums, map, nums[i]);
-            if(val == Int32.MinValue) {
-                map[i] = 1;
-            } else {
-                map[i] = val + 1;
-            }
+            map[i] = val + 1;
         }
 
         int max = 0;
@@ -21,7 +17,7 @@ public class Solution {
     }
 
     private int FindMaxMatchingValue(int[] nums, Dictionary<int, int> map, int num) {
-        int max = Int32.MinValue;
+        int max = 0;
         foreach(var item in map) {
             if(num < nums[item.Key]) {
                 max = Math.Max(max, item.Value);
