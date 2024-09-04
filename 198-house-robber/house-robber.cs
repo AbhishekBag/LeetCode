@@ -1,23 +1,39 @@
 public class Solution {
+    private int[] arr;
     public int Rob(int[] nums) {
-        int[] arr = Enumerable.Repeat(-1, nums.Length).ToArray();
-        return FindSum(nums, 0, arr);
+        arr = Enumerable.Repeat(-1, nums.Length).ToArray();
+        return RobHouse(nums, 0);
     }
 
-    private int FindSum(int[] nums, int curr, int[] arr) {
-        if(curr >= nums.Length) {
+    private int RobHouse(int[] nums, int i) {
+        if(i >= nums.Length) {
             return 0;
         }
 
-        if(arr[curr] != -1) {
-            return arr[curr];
+        if(arr[i] != -1) {
+            return arr[i];
         }
 
-        var choseCurr = nums[curr] + FindSum(nums, curr + 2, arr);
-        var notChoseCurr = FindSum(nums, curr + 1, arr);
+        int take = nums[i] + RobHouse(nums, i + 2);
+        int dontTake = RobHouse(nums, i + 1);
 
-        arr[curr] = Math.Max(choseCurr, notChoseCurr);
+        arr[i] = Math.Max(take, dontTake);
 
-        return arr[curr];
+        return arr[i];
     }
 }
+
+/*
+1,2,3,1 (i)
+
+if(i > length)
+    return 0
+
+take money at i:
+sum + val
+f(i + 2)
+
+dont take at i:
+sum
+f(i + 1)
+*/
