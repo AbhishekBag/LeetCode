@@ -6,9 +6,17 @@ public class Solution {
             arr[i] = Enumerable.Repeat(-1, text2.Length).ToArray();
         }
         
-        return GetMaxSubsequenceLength(text1, text2, 0, 0);
+        GetMaxSubsequenceLength(text1, text2, 0, 0);
 
-        // return arr[text1.Length - 1][text2.Length - 1];
+        // for(int i = 0; i < text1.Length; i++) {
+        //     for(int j = 0; j < text2.Length; j++) {
+        //         Console.Write($"{arr[i][j]}  ");
+        //     }
+
+        //     Console.WriteLine();
+        // }
+
+        return arr[0][0];
     }
 
     private int GetMaxSubsequenceLength(string text1, string text2, int i, int j) {
