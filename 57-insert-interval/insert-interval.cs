@@ -1,54 +1,39 @@
-public class Solution {    
-    private List<int[]> arr = new List<int[]>();
+public class Solution {
     public int[][] Insert(int[][] intervals, int[] newInterval) {
-        Merge(intervals, newInterval, 0);
+        List<int[]> resList = new List<int[]>();
+        bool added = false;
 
-        return arr.ToArray();
-    }
-
-    private void Merge(int[][] intervals, int[] newInterval, int i) {
-        if(i >= intervals.Length) {
-            arr.Add(newInterval);
-            return;
+        if(intervals.Length == 0) {
+            resList.Add(new int[] { newInterval[0], newInterval[1] });
+            added = true;
         }
 
-        if(intervals[i][0] > newInterval[1]) {
-            arr.Add(newInterval);
-            // arr.AddRange(intervals);
-            AddRemaining(intervals, i);
-            return;
-        } else if(intervals[i][1] < newInterval[0]){
-            arr.Add(intervals[i]);
-            Merge(intervals, newInterval, i + 1);
-        } else if(IsOverlaping(intervals[i], newInterval)) {
-            arr.Add(intervals[i]);
-            MergeInterval(arr, newInterval);
-            i++;
-
-            for(; i < intervals.Length; i++) {
-                if(IsOverlaping(arr.LastOrDefault(), intervals[i])) {
-                    MergeInterval(arr, intervals[i]);
-                } else {
-                    AddRemaining(intervals, i);
-                    return;
-                }
+        for(int i = 0; i < intervals.Length; i++) {
+            var intervalInHand = intervals[i];
+            if(newInterval[1] < intervalInHand[0]) {
+                resList.Add(new int[] { newInterval[0], newInterval[1]} );
+                AddIntervals(resList, intervals, i);
+                added = true;
+                break;
+            } else if(newInterval[0] > intervalInHand[1]) {
+                resList.Add(new int[] { intervalInHand[0], intervalInHand[1]} );
+            } else {
+                newInterval[0] = Math.Min(newInterval[0], intervalInHand[0]);
+                newInterval[1] = Math.Max(newInterval[1], intervalInHand[1]);
             }
         }
-    }
 
-    private void AddRemaining(int[][] intervals, int i) {
-        for(; i < intervals.Length; i++) {
-            arr.Add(intervals[i]);
+        if(!added) {
+            resList.Add(new int[] { newInterval[0], newInterval[1]} );
         }
+
+        return resList.ToArray();
     }
 
-    private bool IsOverlaping(int[] a, int[] b) {
-        return Math.Max(a[0], b[0]) <= Math.Min(a[1], b[1]);
-    }
-
-    private void MergeInterval(List<int[]> lst, int[] a) {
-        var b = lst.LastOrDefault();
-        b[0] = Math.Min(b[0], a[0]);
-        b[1] = Math.Max(b[1], a[1]);
+    private void AddIntervals(List<int[]> resList, int[][] intervals, int i) {
+        while(i < intervals.Length) {
+            resList.Add(new int[]{ intervals[i][0], intervals[i][1]} );
+            i++;
+        }
     }
 }
