@@ -1,24 +1,23 @@
 public class Solution {
     public bool CanJump(int[] nums) {
-        int n = nums.Length;
-        if(n == 1) {
-            return true;
+        bool[] arr = new bool[nums.Length];
+        arr[nums.Length - 1] = true;
+
+        for(int i = nums.Length - 2; i >= 0; i--) {
+            arr[i] = IsPossible(arr, i, nums[i]);
         }
 
-        int lastAdded = n - 1;
+        return arr[0];
+    }
 
-        for(int i = n - 2; i >= 0; i--) {
-            int jump = i + nums[i];
-
-            if(jump >= lastAdded) {
-                lastAdded = i;
+    private bool IsPossible(bool[] arr, int pos, int maxJump) {
+        int n = arr.Length;
+        for(int i = pos + maxJump; i >= pos; i--) {
+            if(i >= n || arr[i]) {
+                return true;
             }
         }
 
-        return lastAdded == 0;
+        return false;
     }
 }
-
-// n = 5
-// 0, 1, 2, 3, 4
-// 2, 3, 1, 1, 4
