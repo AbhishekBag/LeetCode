@@ -1,36 +1,22 @@
 public class Solution {
     public bool IsAnagram(string s, string t) {
-        var sMap = GetMap(s);
+        if(s.Length != t.Length) {
+            return false;
+        }
 
-        foreach(char c in t) {
-            if(!sMap.ContainsKey(c)) {
+        int[] sArr = new int[26];
+
+        for(int i = 0; i < s.Length; i++) {
+            sArr[s[i] - 'a']++;
+            sArr[t[i] - 'a']--;
+        }
+
+        foreach(int val in sArr) {
+            if(val != 0) {
                 return false;
-            } else {
-                if(sMap[c] == 1) {
-                    sMap.Remove(c);
-                } else {
-                    sMap[c]--;
-                }
             }
         }
 
-        if(sMap.Count() == 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private Dictionary<char, int> GetMap(string s) {
-        Dictionary<char, int> map = new Dictionary<char, int>();
-        foreach(char c in s) {
-            if(map.ContainsKey(c)) {
-                map[c]++;
-            } else {
-                map.Add(c, 1);
-            }
-        }
-
-        return map;
+        return true;
     }
 }
