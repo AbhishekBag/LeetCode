@@ -1,14 +1,10 @@
 public class Solution {
     public bool IsPalindrome(string s) {
-        string str = CleanString(s.ToLower());
-        int n = str.Length;
-
-        if(n == 0) {
-            return true;
-        }
+        s = CleanString(s);
+        int n = s.Length;
 
         for(int i = 0; i < n/2; i++) {
-            if(str[i] != str[n - i - 1]) {
+            if(s[i] != s[n - i - 1]) {
                 return false;
             }
         }
@@ -16,11 +12,11 @@ public class Solution {
         return true;
     }
 
-    private string CleanString(string s) {
-        StringBuilder sb = new StringBuilder();
-        foreach(char c in s) {
+    private string CleanString(string str) {
+        var sb = new StringBuilder();
+        foreach(char c in str) {
             if(Char.IsLetterOrDigit(c)) {
-                sb.Append(c);
+                sb.Append(Char.ToLower(c));
             }
         }
 
