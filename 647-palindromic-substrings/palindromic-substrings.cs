@@ -1,24 +1,33 @@
 public class Solution {
     public int CountSubstrings(string s) {
-        int count = 0;
         int n = s.Length;
-
-        for(int i = 0; i < n; i++) {
-            count += CountPalindromicSubstrings(s, i, i, n);
-            count += CountPalindromicSubstrings(s, i, i + 1, n);            
+        if(n <= 1) {
+            return 1;
         }
 
-        return count++;
+        int res = 0;
+
+        for(int i = 0; i < s.Length; i++) {
+            var oddPCount = GetPalindromeCount(s, i, true);
+            var evenPCount = GetPalindromeCount(s, i, false);
+
+            res += oddPCount + evenPCount;
+        }
+
+        return res;
     }
 
-    private int CountPalindromicSubstrings(string s, int l, int r, int n) {
-        int count = 0;
-        while(l >= 0 && r < n && s[l] == s[r]) {
+    private int GetPalindromeCount(string s, int center, bool oddP) {
+        int n = s.Length;
+        int left = oddP ? center - 1 : center;
+        int right = center + 1;
+        int count = oddP ? 1 : 0;
+        while(left >= 0 && right < n && s[left] == s[right]) {
             count++;
-            l--;
-            r++;
+            left--;
+            right++;
         }
 
-        return count; 
+        return count;
     }
 }
