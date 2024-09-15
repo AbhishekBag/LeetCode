@@ -11,7 +11,6 @@ public class Solution {
             var tmpEven = GetMaxPalindromicStringCenteredAt(s, i, false);
             var tmp = tmpOdd.Length > tmpEven.Length ? tmpOdd : tmpEven;
 
-            // Console.WriteLine($"i: {i}; res: {res}; tmp: {tmp}");
             if(res.Length < tmp.Length) {
                 res = tmp;
             }
@@ -22,8 +21,7 @@ public class Solution {
 
     private string GetMaxPalindromicStringCenteredAt(string s, int center, bool checkOddLengthP) {
         int n = s.Length;
-
-        // Odd length palindrome
+        
         int left = checkOddLengthP ? center - 1 : center;
         int right = center + 1;
         while(left >= 0 && right < n && s[left] == s[right]) {
