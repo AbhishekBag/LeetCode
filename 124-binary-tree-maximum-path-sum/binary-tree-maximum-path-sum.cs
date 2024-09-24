@@ -12,24 +12,24 @@
  * }
  */
 public class Solution {
-    private int max = 0;
+    private int maxSum = 0;
     public int MaxPathSum(TreeNode root) {
-        max = root.val;
-        TravarseDFS(root);
+        maxSum = root.val;
+        GetPathSum(root);
 
-        return max;
+        return maxSum;
     }
 
-    private int TravarseDFS(TreeNode node) {
+    private int GetPathSum(TreeNode node) {
         if(node == null) {
             return 0;
         }
 
-        int leftPathSum = Math.Max(0, TravarseDFS(node.left));
-        int rightPathSum = Math.Max(0, TravarseDFS(node.right));
+        int left = Math.Max(0, GetPathSum(node.left));
+        int right = Math.Max(0, GetPathSum(node.right));
 
-        max = Math.Max(max, node.val + leftPathSum + rightPathSum);
+        maxSum = Math.Max(maxSum, left + node.val + right);
 
-        return node.val + Math.Max(leftPathSum, rightPathSum);
+        return Math.Max(left, right) + node.val;
     }
 }
