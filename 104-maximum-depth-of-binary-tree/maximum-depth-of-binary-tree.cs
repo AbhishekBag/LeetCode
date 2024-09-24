@@ -13,12 +13,16 @@
  */
 public class Solution {
     public int MaxDepth(TreeNode root) {
-        if(root == null) {
+        return GetDepth(root);
+    }
+
+    private int GetDepth(TreeNode node) {
+        if (node == null) {
             return 0;
         }
 
-        int leftDepth = MaxDepth(root.left);
-        int rightDepth = MaxDepth(root.right);
+        var leftDepth = GetDepth(node.left);
+        var rightDepth = GetDepth(node.right);
 
         return Math.Max(leftDepth, rightDepth) + 1;
     }
