@@ -13,22 +13,22 @@
  */
 public class Solution {
     public bool IsValidBST(TreeNode root) {
-        return ValidateBST(root, null, null);
+        return ValidBST(root, null, null);
     }
 
-    private bool ValidateBST(TreeNode root, TreeNode min, TreeNode max) {
-        if(root == null) {
+    private bool ValidBST(TreeNode node, TreeNode min, TreeNode max) {
+        if(node == null) {
             return true;
         }
 
-        if(min != null && root.val <= min.val) {
+        if(min != null && node.val >= min.val) {
             return false;
         }
 
-        if(max != null && root.val >= max.val) {
+        if(max != null && node.val <= max.val) {
             return false;
         }
 
-        return ValidateBST(root.left, min, root) && ValidateBST(root.right, root, max);
+        return ValidBST(node.left, node, max) && ValidBST(node.right, min, node);
     }
 }
