@@ -12,31 +12,43 @@
  * }
  */
 public class Solution {
-    public IList<IList<int>> LevelOrder(TreeNode root) {
+    public IList<IList<int>> LevelOrder(TreeNode root) {        
         List<IList<int>> res = new List<IList<int>>();
-        Queue<QNode> queue = new Queue<QNode>();
-
         if(root == null) {
             return res;
         }
 
-        queue.Enqueue(new QNode(root, 0));
+        Queue<QNode> q = new Queue<QNode>();
+        res.Add(new List<int> { root.val });
 
-        while(queue.Count > 0) {
-            var poped = queue.Dequeue();
-            if(res.Count == poped.level) {
-                res.Add(new List<int>() { poped.node.val });
+        if(root.left != null) {
+            q.Enqueue(new QNode(root.left, 1));
+        }
+        if(root.right != null) {
+            q.Enqueue(new QNode(root.right, 1));
+        }
+
+        var prev = new QNode(root, 0);
+
+        while(q.Count != 0) {
+            var dq = q.Dequeue();
+
+            // Console.WriteLine($"dq: ({dq.node.val}, {dq.level}), prev: ({prev.node.val}, {prev.level})");
+
+            if(prev.level == dq.level) {
+                res.LastOrDefault().Add(dq.node.val);
             } else {
-                res.LastOrDefault().Add(poped.node.val);
+                res.Add(new List<int> { dq.node.val });
             }
 
-            if(poped.node.left != null) {
-                queue.Enqueue(new QNode(poped.node.left, poped.level + 1));
+            if(dq.node.left != null) {
+                q.Enqueue(new QNode(dq.node.left, dq.level + 1));
+            }
+            if(dq.node.right != null) {
+                q.Enqueue(new QNode(dq.node.right, dq.level + 1));
             }
 
-            if(poped.node.right != null) {
-                queue.Enqueue(new QNode(poped.node.right, poped.level + 1));
-            }
+            prev = dq;
         }
 
         return res;
