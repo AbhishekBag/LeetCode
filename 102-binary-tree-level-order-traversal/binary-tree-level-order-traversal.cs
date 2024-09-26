@@ -32,9 +32,6 @@ public class Solution {
 
         while(q.Count != 0) {
             var dq = q.Dequeue();
-
-            // Console.WriteLine($"dq: ({dq.node.val}, {dq.level}), prev: ({prev.node.val}, {prev.level})");
-
             if(prev.level == dq.level) {
                 res.LastOrDefault().Add(dq.node.val);
             } else {
