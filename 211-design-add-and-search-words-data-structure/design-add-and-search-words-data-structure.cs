@@ -21,34 +21,30 @@ public class WordDictionary {
         return SearchNode(root, word, 0);
     }
 
-    private bool SearchNode(TrieNode R, string word, int i) {
-        // Base case: If we've reached the end of the word, return whether it's a valid word.
-        if (i == word.Length) {
-            return R.isWord;
+    private bool SearchNode(TrieNode root, string word, int i) {
+        if(i == word.Length) {
+            return root.isWord;
         }
 
-        char c = word[i];
-
-        // If current character is '.', check all possible nodes.
-        if (c == '.') {
-            for (int j = 0; j < 26; j++) {
-                if (R.node[j] != null) {
-                    // Recursively check the next character after the wildcard
-                    if (SearchNode(R.node[j], word, i + 1)) {
-                        return true;  // If any path leads to a valid word, return true
+        var c = word[i];
+        if(c == '.') {
+            for(int j = 0; j < 26; j++) {
+                if(root.node[j] != null) {
+                    if(SearchNode(root.node[j], word, i + 1)) {
+                        return true;
                     }
                 }
             }
-            return false;  // If no valid path is found for the wildcard, return false
+
+            return false;
         } else {
-            // Regular character case
-            if (R.node[c - 'a'] == null) {
-                return false;  // If there's no matching node, return false
+            if(root.node[c - 'a'] == null) {
+                return false;
             }
-            return SearchNode(R.node[c - 'a'], word, i + 1);  // Continue with the next character
+
+            return SearchNode(root.node[c - 'a'], word, i + 1);
         }
     }
-
 }
 
 public class TrieNode {
