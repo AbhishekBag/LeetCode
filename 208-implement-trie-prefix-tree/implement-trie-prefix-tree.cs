@@ -1,50 +1,55 @@
 public class Trie {
-
-    private Trie[] node;
-    private bool isWord;
-
+    TrieNode root;
     public Trie() {
-        node = new Trie[26];
-        isWord = false;
+        root = new TrieNode();
     }
     
     public void Insert(string word) {
-        Trie root = this;
+        var tmp = root;
         foreach(char c in word) {
-            if(root.node[c - 'a'] == null) {
-                root.node[c - 'a'] = new Trie();
+            if(tmp.node[c - 'a'] == null) {
+                tmp.node[c - 'a'] = new TrieNode();
             }
 
-            root = root.node[c - 'a'];
+            tmp = tmp.node[c - 'a'];
         }
-
-        root.isWord = true;
+        tmp.isWord = true;
     }
     
     public bool Search(string word) {
-        Trie cur = this;
+        var tmp = root;
         foreach(char c in word) {
-            if(cur.node[c - 'a'] == null) {
+            if(tmp.node[c - 'a'] == null) {
                 return false;
             }
 
-            cur = cur.node[c - 'a'];
+            tmp = tmp.node[c - 'a'];
         }
 
-        return cur.isWord;
+        return tmp.isWord;
     }
     
     public bool StartsWith(string prefix) {
-        Trie cur = this;
+        var tmp = root;
         foreach(char c in prefix) {
-            if(cur.node[c - 'a'] == null) {
+            if(tmp.node[c - 'a'] == null) {
                 return false;
             }
 
-            cur = cur.node[c - 'a'];
+            tmp = tmp.node[c - 'a'];
         }
 
         return true;
+    }
+}
+
+public class TrieNode {
+    public TrieNode[] node;
+    public bool isWord;
+
+    public TrieNode(bool iWord = false) {
+        node = new TrieNode[26];
+        isWord = iWord;
     }
 }
 
