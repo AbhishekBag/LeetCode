@@ -1,82 +1,62 @@
 public class WordDictionary {
-    public int size = 26;
-    public WordDictionary[] root;
-    public bool isEnd;
-
+    private TrieNode root;
     public WordDictionary() {
-        root = new WordDictionary[size];
-        isEnd = false;
+        root = new TrieNode();
     }
-
+    
     public void AddWord(string word) {
-        WordDictionary tr = this;
-        foreach (char c in word) {
-            if (tr.root[c - 'a'] == null) {
-                tr.root[c - 'a'] = new WordDictionary();
+        var tmp = root;
+        foreach(char c in word) {
+            if(tmp.node[c - 'a'] == null) {
+                tmp.node[c - 'a'] = new TrieNode();
             }
-            tr = tr.root[c - 'a'];
+
+            tmp = tmp.node[c - 'a'];
         }
-        tr.isEnd = true;
+
+        tmp.isWord = true;
+    }
+    
+    public bool Search(string word) {
+        return SearchNode(root, word, 0);
     }
 
-    // public bool Search(string word) {
-    //     return SearchWord(word, 0, this);
-    // }
+    private bool SearchNode(TrieNode R, string word, int i) {
+        // Base case: If we've reached the end of the word, return whether it's a valid word.
+        if (i == word.Length) {
+            return R.isWord;
+        }
 
-    public bool Search(string word) {
-    List<WordDictionary> nodes = new List<WordDictionary>();
-    nodes.Add(this);
-
-    for (int i = 0; i < word.Length; i++) {
         char c = word[i];
-        List<WordDictionary> nextNodes = new List<WordDictionary>();
 
-        foreach (WordDictionary node in nodes) {
-            if (c == '.') {
-                foreach (WordDictionary child in node.root) {
-                    if (child != null) {
-                        nextNodes.Add(child);
+        // If current character is '.', check all possible nodes.
+        if (c == '.') {
+            for (int j = 0; j < 26; j++) {
+                if (R.node[j] != null) {
+                    // Recursively check the next character after the wildcard
+                    if (SearchNode(R.node[j], word, i + 1)) {
+                        return true;  // If any path leads to a valid word, return true
                     }
                 }
-            } else if (node.root[c - 'a'] != null) {
-                nextNodes.Add(node.root[c - 'a']);
             }
-        }
-
-        nodes = nextNodes;
-        if (nodes.Count == 0) {
-            return false;
-        }
-    }
-
-    foreach (WordDictionary node in nodes) {
-        if (node.isEnd) {
-            return true;
+            return false;  // If no valid path is found for the wildcard, return false
+        } else {
+            // Regular character case
+            if (R.node[c - 'a'] == null) {
+                return false;  // If there's no matching node, return false
+            }
+            return SearchNode(R.node[c - 'a'], word, i + 1);  // Continue with the next character
         }
     }
 
-    return false;
 }
 
-    private bool SearchWord(string word, int index, WordDictionary node) {
-        if (index == word.Length) {
-            return node.isEnd;
-        }
+public class TrieNode {
+    public TrieNode[] node;
+    public bool isWord = false;
 
-        char c = word[index];
-        if (c == '.') {
-            for (int j = 0; j < size; j++) {
-                if (node.root[j] != null && SearchWord(word, index + 1, node.root[j])) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            if (node.root[c - 'a'] == null) {
-                return false;
-            }
-            return SearchWord(word, index + 1, node.root[c - 'a']);
-        }
+    public TrieNode() {
+        node = new TrieNode[26];
     }
 }
 
