@@ -16,18 +16,18 @@ public class Solution {
     private List<int> res;
     public int KthSmallest(TreeNode root, int k) {
         res = new List<int>();
-        FindKSmall(root);
+        FindKSmall(root, k);
 
         return res[k - 1];
     }
 
-    private void FindKSmall(TreeNode node) {
-        if(node == null) {
+    private void FindKSmall(TreeNode node, int k) {
+        if(node == null || res.Count == k) {
             return;
         }
 
-        FindKSmall(node.left);
+        FindKSmall(node.left, k);
         res.Add(node.val);
-        FindKSmall(node.right);
+        FindKSmall(node.right, k);
     }
 }
