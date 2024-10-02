@@ -14,26 +14,10 @@ public class Solution {
             return arr[i];
         }
 
-        int take = nums[i] + RobHouse(nums, i + 2);
-        int dontTake = RobHouse(nums, i + 1);
+        int pick = nums[i] + RobHouse(nums, i + 2);
+        int notPick = RobHouse(nums, i + 1);
 
-        arr[i] = Math.Max(take, dontTake);
-
+        arr[i] = Math.Max(pick, notPick);
         return arr[i];
     }
 }
-
-/*
-1,2,3,1 (i)
-
-if(i > length)
-    return 0
-
-take money at i:
-sum + val
-f(i + 2)
-
-dont take at i:
-sum
-f(i + 1)
-*/
