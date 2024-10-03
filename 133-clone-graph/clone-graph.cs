@@ -29,35 +29,19 @@ public class Solution {
 
         Dictionary<Node, Node> collection = new Dictionary<Node, Node>();
         Queue<Node> q = new Queue<Node>();
-        HashSet<Node> visited = new HashSet<Node>();
         q.Enqueue(node);
+        collection[node] = new Node(node.val);
 
         while(q.Count > 0) {
-            Node dq = q.Dequeue();
-
-            if(!visited.Contains(dq)) {
-                visited.Add(dq);
-                if(!collection.ContainsKey(dq)) {
-                    collection[dq] = new Node(dq.val);
-                }
-
-                foreach(var neighbor in dq.neighbors) {
+            Node dq = q.Dequeue();            
+            foreach(var neighbor in dq.neighbors) {                
+                if(!collection.ContainsKey(neighbor)) {
+                    collection[neighbor] = new Node(neighbor.val);
                     q.Enqueue(neighbor);
                 }
-            }            
-        }
 
-        q.Enqueue(node);
-        visited.Clear();
-        while(q.Count > 0) {
-            var dq = q.Dequeue();
-            if(!visited.Contains(dq)) {
-                visited.Add(dq);
-                foreach(var neighbor in dq.neighbors) {
-                    collection[dq].neighbors.Add(collection[neighbor]);
-                    q.Enqueue(neighbor);
-                }
-            }            
+                collection[dq].neighbors.Add(collection[neighbor]);
+            }
         }
 
         return collection[node];
