@@ -24,15 +24,13 @@ public class Solution {
         int R = grid.Length;
         int C = grid[0].Length;
 
-        if(r < 0 || r >= R || c < 0 || c >= C) {
+        if(r < 0 || r >= R || c < 0 || c >= C || grid[r][c] != '1') {
             return;
         }
 
-        if(grid[r][c] == '1') {
-            grid[r][c] = '*';
-            for(int i = 0; i < 4; i++) {
-                MarkIsland(grid, r + rowMove[i], c + colMove[i]);
-            }
+        grid[r][c] = '*';
+        for(int i = 0; i < 4; i++) {
+            MarkIsland(grid, r + rowMove[i], c + colMove[i]);
         }
     }
 }
