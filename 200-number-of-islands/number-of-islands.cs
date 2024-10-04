@@ -10,14 +10,11 @@ public class Solution {
 
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
-                // Console.Write($"{grid[i][j]} ");
                 if(grid[i][j] == '1') {
                     count++;
                     MarkIsland(grid, i, j);
                 }
             }
-
-            // Console.WriteLine();
         }
 
         return count;
