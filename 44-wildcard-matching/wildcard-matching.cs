@@ -6,12 +6,12 @@ public class Solution {
     }
 
     private bool IsMatching(string s, string p, int i, int j) {
-        int n = s.Length;
-        int m = p.Length;
-
         if(cache.ContainsKey((i, j))) {
             return cache[(i, j)];
         }
+
+        int n = s.Length;
+        int m = p.Length;
 
         if(i >= n && j >= m) {
             return true;
