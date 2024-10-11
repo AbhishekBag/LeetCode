@@ -1,21 +1,26 @@
 public class Solution {
     public void Merge(int[] nums1, int m, int[] nums2, int n) {
         int[] arr = new int[m + n];
-        int p = 0, q = 0;
+        int p = 0;
+        int i = 0, j = 0;
 
-        for(int i = 0; i < m + n; i++) {
-            if(p >= m) {
-                arr[i] = nums2[q++];
-            } else if(q >= n) {
-                arr[i] = nums1[p++];
-            } else if(nums1[p] < nums2[q]) {
-                arr[i] = nums1[p++];
+        while(i < m && j < n) {
+            if(nums1[i] > nums2[j]) {
+                arr[p++] = nums2[j++];
             } else {
-                arr[i] = nums2[q++];
+                arr[p++] = nums1[i++];
             }
         }
 
-        for(int i = 0; i < m + n; i++) {
+        while(i < m) {
+            arr[p++] = nums1[i++];
+        }
+
+        while(j < n) {
+            arr[p++] = nums2[j++];
+        }
+
+        for(i = 0; i < m + n; i++) {
             nums1[i] = arr[i];
         }
     }
