@@ -1,43 +1,51 @@
 public class MinStack {
-    Stack<StackNode> myStack;
-
+    private Stack<Node> collection;
     public MinStack() {
-        myStack = new Stack<StackNode>();
+        collection = new Stack<Node>();
     }
     
     public void Push(int val) {
-        if(myStack.Count() == 0) {
-            myStack.Push(new StackNode(val, val));
-        } else {
-            if(val > GetMin()) {
-                myStack.Push(new StackNode(val, GetMin()));
-            } else {
-                myStack.Push(new StackNode(val, val));
-            }            
+        int min = val;
+        if(collection.Count > 0) {
+            min = GetMin() > val ? val : GetMin();
         }
+        
+        collection.Push(new Node(val, min));
     }
     
     public void Pop() {
-        myStack.Pop();
+        if(collection.Count > 0) {
+            collection.Pop();
+        }
     }
     
     public int Top() {
-        return myStack.Peek().val;
+        if(collection.Count > 0) {
+            var top = collection.Peek();
+            return top.val;
+        }
+
+        return -1;
     }
     
     public int GetMin() {
-        return myStack.Peek().min;
+        if(collection.Count > 0) {
+            var top = collection.Peek();
+            return top.min;
+        }
+
+        return -1;
     }
 }
 
-public class StackNode {
+public class Node {
     public int val;
     public int min;
 
-    public  StackNode(int v, int m) {
+    public Node(int v, int m) {
         val = v;
         min = m;
-    } 
+    }
 }
 
 /**
