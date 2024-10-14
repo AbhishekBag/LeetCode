@@ -1,33 +1,12 @@
 public class Solution {
     public int MaxProfit(int[] prices) {
-        if(prices.Length <= 1) {
-            return 0;
+        int minTill = Int32.MaxValue;
+        int maxProfit = 0;
+        foreach(int price in prices) {
+            minTill = Math.Min(minTill, price);
+            maxProfit = Math.Max(maxProfit, price - minTill);
         }
 
-        int max = 0;
-        int minTill = prices[0];
-
-        for(int i = 1; i < prices.Length; i++) {
-            minTill = Math.Min(minTill, prices[i]);
-            max = Math.Max(max, prices[i] - minTill);
-        }
-
-        return max;
+        return maxProfit;
     }
 }
-
-/*
-7,1,5,3,6,4
-7,6,6,6,6,4
-
-max = 0
-minTill = 7
-
-1
-minTill = 1
-max = Max(max, (1-minTill)) = 0
-
-2
-minTill = 1
-max = Max(max, (5, minTill)) = 4
-*/
