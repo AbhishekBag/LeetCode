@@ -1,10 +1,9 @@
 public class RandomizedSet {
-    public Dictionary<int, int> map;
-    public List<int> items;
-
+    private Dictionary<int, int> map;
+    private List<int> arr;
     public RandomizedSet() {
         map = new Dictionary<int, int>();
-        items = new List<int>();
+        arr = new List<int>();
     }
     
     public bool Insert(int val) {
@@ -12,8 +11,9 @@ public class RandomizedSet {
             return false;
         }
 
-        map[val] = items.Count();
-        items.Add(val);
+        map[val] = arr.Count;
+        arr.Add(val);
+
         return true;
     }
     
@@ -22,21 +22,20 @@ public class RandomizedSet {
             return false;
         }
 
-        var index = map[val];
-        var lastElement = items[items.Count - 1];
+        int index = map[val];
+        int lastItem = arr[arr.Count - 1];
 
-        items[index] = lastElement;
-        map[lastElement] = index;
-
+        arr[index] = lastItem;
+        arr.RemoveAt(arr.Count - 1);
+        map[lastItem] = index;
         map.Remove(val);
-        items.RemoveAt(items.Count - 1);
 
         return true;
     }
     
     public int GetRandom() {
         var rand = new Random();
-        return items[rand.Next(0, items.Count)];
+        return arr[rand.Next(arr.Count)];
     }
 }
 
