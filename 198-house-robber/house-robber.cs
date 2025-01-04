@@ -1,7 +1,7 @@
 public class Solution {
-    private int[] arr;
+    private int[] dp;
     public int Rob(int[] nums) {
-        arr = Enumerable.Repeat(-1, nums.Length).ToArray();
+        dp = Enumerable.Repeat(-1, nums.Length + 1).ToArray();
         return RobHouse(nums, 0);
     }
 
@@ -10,14 +10,11 @@ public class Solution {
             return 0;
         }
 
-        if(arr[i] != -1) {
-            return arr[i];
+        if(dp[i] != -1) {
+            return dp[i];
         }
 
-        int pick = nums[i] + RobHouse(nums, i + 2);
-        int notPick = RobHouse(nums, i + 1);
-
-        arr[i] = Math.Max(pick, notPick);
-        return arr[i];
+        dp[i] = Math.Max(nums[i] + RobHouse(nums, i + 2), RobHouse(nums, i + 1));
+        return dp[i];
     }
 }
