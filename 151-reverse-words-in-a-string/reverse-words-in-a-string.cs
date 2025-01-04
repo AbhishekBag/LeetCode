@@ -1,11 +1,16 @@
 public class Solution {
     public string ReverseWords(string s) {
-        string[] arr = s.Split(" ");
+        s = s.Trim();
+        if(s.Length <= 1) {
+            return s;
+        }
 
-        arr = arr.Where(x => x.Length > 0).ToArray();
-
+        var arr = s.Split(" ")
+                    .Select(x => x.Trim())
+                    .Where(x => x.Length >= 1)
+                    .ToArray();
         Array.Reverse(arr);
 
-        return String.Join(" ", arr);
+        return string.Join(" ", arr);
     }
 }
