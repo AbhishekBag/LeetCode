@@ -6,7 +6,6 @@ public class Solution {
         }
 
         var arr = s.Split(" ")
-                    .Select(x => x.Trim())
                     .Where(x => x.Length >= 1)
                     .ToArray();
         Array.Reverse(arr);
