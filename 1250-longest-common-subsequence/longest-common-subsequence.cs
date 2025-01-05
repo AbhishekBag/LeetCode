@@ -6,11 +6,11 @@ public class Solution {
             arr[i] = Enumerable.Repeat(-1, text2.Length).ToArray();
         }
 
-        return FindMaxLength(text1, text2, 0, 0);
+        return FindLCS(text1, text2, 0, 0);
     }
 
-    private int FindMaxLength(string str1, string str2, int i, int j) {
-        if(i >= str1.Length || j >= str2.Length) {
+    private int FindLCS(string text1, string text2, int i, int j) {
+        if(i >= text1.Length || j >= text2.Length) {
             return 0;
         }
 
@@ -18,10 +18,10 @@ public class Solution {
             return arr[i][j];
         }
 
-        if(str1[i] == str2[j]) {
-            arr[i][j] = 1 + FindMaxLength(str1, str2, i + 1, j + 1);
+        if(text1[i] != text2[j]) {
+            arr[i][j] = Math.Max(FindLCS(text1, text2, i + 1, j), FindLCS(text1, text2, i, j + 1));
         } else {
-            arr[i][j] = Math.Max(FindMaxLength(str1, str2, i + 1, j), FindMaxLength(str1, str2, i, j + 1));
+            arr[i][j] = 1 + FindLCS(text1, text2, i + 1, j + 1);
         }
 
         return arr[i][j];
