@@ -1,37 +1,34 @@
 public class Solution {
     private int[][] arr;
     public int CoinChange(int[] coins, int amount) {
-        arr = new int[coins.Length][];
-        for(int i = 0; i < coins.Length; i++) {
-            arr[i] = Enumerable.Repeat(Int32.MinValue, amount + 1).ToArray();
+        arr = new int[amount + 1][];
+        for(int i = 0; i <= amount; i++) {
+            arr[i] = Enumerable.Repeat(Int32.MaxValue, coins.Length).ToArray();
         }
         
-        var res = PickCoin(coins, amount, coins.Length - 1);
+        var count = CountCoins(coins, amount, 0);
+        if(count >= 99999) {
+            return -1;
+        }
 
-        return res >= Int32.MaxValue ? -1 : res;
+        return count;
     }
 
-    private int PickCoin(int[] coins, int amount, int index) {
-        if(amount < 0 || index < 0) {
-            return Int32.MaxValue;
+    private int CountCoins(int[] coins, int amount, int index) {
+        if(amount < 0 || index >= coins.Length) {
+            return 99999;
         }
 
         if(amount == 0) {
             return 0;
         }
 
-        if(arr[index][amount] != Int32.MinValue) {
-            return arr[index][amount];
+        if(arr[amount][index] != Int32.MaxValue) {
+            return arr[amount][index];
         }
 
-        int pk = PickCoin(coins, amount - coins[index], index);
-        int picked = pk == Int32.MaxValue ? Int32.MaxValue : pk + 1;
-        int notPicked = PickCoin(coins, amount, index - 1);
+        arr[amount][index] = Math.Min(1 + CountCoins(coins, amount - coins[index], index), CountCoins(coins, amount, index + 1));
 
-        int path = Math.Min(picked, notPicked);
-
-        arr[index][amount] = path;
-
-        return path;
+        return arr[amount][index];
     }
 }
