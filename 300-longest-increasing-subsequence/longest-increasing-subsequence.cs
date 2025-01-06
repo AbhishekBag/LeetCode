@@ -1,29 +1,32 @@
 public class Solution {
     public int LengthOfLIS(int[] nums) {
-        Dictionary<int, int> map = new Dictionary<int, int>();
+        int n = nums.Length;
+        int[] arr = Enumerable.Repeat(1, n).ToArray();
 
-        map[nums.Length - 1] = 1;
-        for(int i = nums.Length - 2; i >= 0; i--) {
-            var val = FindMaxMatchingValue(nums, map, nums[i]);
-            map[i] = val + 1;
+        for(int i = n - 2; i >= 0; i--) {
+            int curMax = nums[i];
+            for(int j = i + 1; j < n; j++) {
+                if(nums[i] < nums[j]) {
+                    arr[i] = Math.Max(arr[i], arr[j] + 1);
+                }
+            }
         }
 
         int max = 0;
-        foreach(var val in map.Values) {
-            max = Math.Max(max, val);
+        for(int i = 0; i < arr.Length; i++) {
+            max = Math.Max(max, arr[i]);
         }
+
+        // Print(arr);
 
         return max;
     }
 
-    private int FindMaxMatchingValue(int[] nums, Dictionary<int, int> map, int num) {
-        int max = 0;
-        foreach(var item in map) {
-            if(num < nums[item.Key]) {
-                max = Math.Max(max, item.Value);
-            }
+    private void Print(int[] arr) {
+        for(int i = 0; i < arr.Length; i++) {
+            Console.Write($"{arr[i]}, ");
         }
 
-        return max;
+        Console.WriteLine();
     }
 }
