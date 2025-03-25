@@ -1,24 +1,19 @@
 public class Solution {
     public bool IsValid(string s) {
         Stack<char> stk = new Stack<char>();
-
         foreach(char c in s) {
-            if(c == ')' || c == '}' || c == ']') {
-                if(stk.Count == 0) {
+            if(c == '(' || c == '{' || c == '[') {
+                stk.Push(c);
+            } else if(stk.Count > 0) {
+                char peek = stk.Peek();
+                if(peek == '(' && c == ')' || peek == '{' && c == '}' || peek =='[' && c == ']') {
+                    stk.Pop();
+                } else {
                     return false;
                 }
-
-                char poped = stk.Pop();
-                if(poped == '(' && c == ')' ||
-                    poped == '{' && c == '}' ||
-                    poped == '[' && c == ']') {
-                    continue;
-                }
-
+            } else {
                 return false;
             }
-
-            stk.Push(c);
         }
 
         return stk.Count == 0 ? true : false;
