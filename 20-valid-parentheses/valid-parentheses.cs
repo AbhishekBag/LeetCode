@@ -4,9 +4,11 @@ public class Solution {
         foreach(char c in s) {
             if(c == '(' || c == '{' || c == '[') {
                 stk.Push(c);
-            } else if(stk.Count > 0) {
-                char peek = stk.Peek();
-                if(peek == '(' && c == ')' || peek == '{' && c == '}' || peek =='[' && c == ']') {
+            } else if(stk.Count != 0) {
+                char p = stk.Peek();
+                if(p == '(' && c == ')' ||
+                p == '{' && c == '}' ||
+                p == '[' && c == ']') {
                     stk.Pop();
                 } else {
                     return false;
@@ -16,6 +18,10 @@ public class Solution {
             }
         }
 
-        return stk.Count == 0 ? true : false;
+        if(stk.Count == 0) {
+            return true;
+        }
+
+        return false;
     }
 }
