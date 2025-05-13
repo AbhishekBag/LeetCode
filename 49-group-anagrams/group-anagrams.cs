@@ -15,10 +15,6 @@ public class Solution {
             collection[k].Add(str);
         }
 
-        foreach(var item in collection) {
-            res.Add(item.Value);
-        }
-
-        return res;
+        return collection.Values.ToList<IList<string>>();
     }
 }
