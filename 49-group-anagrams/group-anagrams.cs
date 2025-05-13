@@ -1,19 +1,24 @@
 public class Solution {
     public IList<IList<string>> GroupAnagrams(string[] strs) {
-        Dictionary<string, List<string>> collections = new Dictionary<string, List<string>>();
+        IList<IList<string>> res = new List<IList<string>>();
+        Dictionary<string, List<string>> collection = new();
 
-        foreach(string str in strs) {
-            var strArr = str.ToArray();
-            Array.Sort(strArr);
-            var sortedStr = new string(strArr);
+        foreach(var str in strs) {
+            var arr = str.ToArray();
+            Array.Sort(arr);
+            string k = new string(arr);
 
-            if(!collections.ContainsKey(sortedStr)) {
-                collections[sortedStr] = new List<string>();
+            if(!collection.ContainsKey(k)) {
+                collection[k] = new List<string>();
             }
 
-            collections[sortedStr].Add(str);
+            collection[k].Add(str);
         }
 
-        return collections.Values.ToList<IList<string>>();
+        foreach(var item in collection) {
+            res.Add(item.Value);
+        }
+
+        return res;
     }
 }
