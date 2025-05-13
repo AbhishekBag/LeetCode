@@ -4,15 +4,14 @@ public class Solution {
             return false;
         }
 
-        int[] sArr = new int[26];
-
+        int[] collection = new int[26];
         for(int i = 0; i < s.Length; i++) {
-            sArr[s[i] - 'a']++;
-            sArr[t[i] - 'a']--;
+            collection[s[i] - 'a']++;
+            collection[t[i] - 'a']--;
         }
 
-        foreach(int val in sArr) {
-            if(val != 0) {
+        foreach(int item in collection) {
+            if(item != 0) {
                 return false;
             }
         }
