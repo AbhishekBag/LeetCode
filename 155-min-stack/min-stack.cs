@@ -1,40 +1,30 @@
 public class MinStack {
-    private Stack<Node> collection;
+    private Stack<Node> stack;
     public MinStack() {
-        collection = new Stack<Node>();
+        stack = new();
     }
     
     public void Push(int val) {
-        int min = val;
-        if(collection.Count > 0) {
-            min = GetMin() > val ? val : GetMin();
+        if(stack.Count() == 0) {
+            stack.Push(new Node(val, val));
+        } else {
+            var peeked = stack.Peek();
+            stack.Push(new Node(val, Math.Min(val, peeked.min)));
         }
-        
-        collection.Push(new Node(val, min));
     }
     
     public void Pop() {
-        if(collection.Count > 0) {
-            collection.Pop();
-        }
+        stack.Pop();
     }
     
     public int Top() {
-        if(collection.Count > 0) {
-            var top = collection.Peek();
-            return top.val;
-        }
-
-        return -1;
+        var peeked = stack.Peek();
+        return peeked.val;
     }
     
     public int GetMin() {
-        if(collection.Count > 0) {
-            var top = collection.Peek();
-            return top.min;
-        }
-
-        return -1;
+        var peeked = stack.Peek();
+        return peeked.min;
     }
 }
 
