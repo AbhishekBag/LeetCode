@@ -22,15 +22,15 @@ public class Solution {
 
     private int GetDepth(TreeNode root) {
         if(root == null) {
-            return Int32.MaxValue;
-        }
-
-        if(root.left == null && root.right == null) {
-            return 1;
+            return 0;
         }
 
         int left = GetDepth(root.left);
         int right = GetDepth(root.right);
+
+        if(left == 0 || right == 0) {
+            return Math.Max(left, right) + 1;
+        }
 
         return Math.Min(left, right) + 1;
     }
