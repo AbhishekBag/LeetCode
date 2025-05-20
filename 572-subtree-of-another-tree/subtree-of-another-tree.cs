@@ -21,23 +21,24 @@ public class Solution {
             return false;
         }
 
-        if(IsSubtreeOnANode(root, subRoot)) {
+        if(IsSubTreeOnANode(root, subRoot)) {
             return true;
         }
 
         return IsSubtree(root.left, subRoot) || IsSubtree(root.right, subRoot);
     }
 
-    private bool IsSubtreeOnANode(TreeNode root, TreeNode subRoot) {
+    private bool IsSubTreeOnANode(TreeNode root, TreeNode subRoot) {
         if(root == null && subRoot == null) {
             return true;
         }
 
         if(root != null && subRoot != null) {
             if(root.val == subRoot.val) {
-                return IsSubtreeOnANode(root.left, subRoot.left) && IsSubtreeOnANode(root.right, subRoot.right);
+                return IsSubTreeOnANode(root.left, subRoot.left) && IsSubTreeOnANode(root.right, subRoot.right);
             }
         }
+        
 
         return false;
     }
