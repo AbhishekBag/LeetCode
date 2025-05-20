@@ -12,21 +12,25 @@
  * }
  */
 public class Solution {
+    private bool balanced = true;
     public bool IsBalanced(TreeNode root) {
-        if(root == null) {
-            return true;
-        }
+        GetHeight(root);
 
-        bool isRootBalanced = Math.Abs(GetDepth(root.left) - GetDepth(root.right)) <= 1;
-
-        return isRootBalanced && IsBalanced(root.left) && IsBalanced(root.right);
+        return balanced;
     }
 
-    private int GetDepth(TreeNode root) {
-        if(root == null) {
+    private int GetHeight(TreeNode node) {
+        if(node == null) {
             return 0;
         }
 
-        return Math.Max(GetDepth(root.left), GetDepth(root.right)) + 1;
+        var left = GetHeight(node.left);
+        var right = GetHeight(node.right);
+
+        if(Math.Abs(left - right) >= 2) {
+            balanced = false;
+        }
+
+        return Math.Max(left, right) + 1;
     }
 }
