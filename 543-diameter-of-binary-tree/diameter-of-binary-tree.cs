@@ -12,21 +12,22 @@
  * }
  */
 public class Solution {
-    private int maxDiameter = 0;
+    private int diameter;
     public int DiameterOfBinaryTree(TreeNode root) {
         GetDiameter(root);
 
-        return maxDiameter;
+        return diameter;
     }
 
-    private int GetDiameter(TreeNode root) {
-        if(root == null) {
+    private int GetDiameter(TreeNode node) {
+        if(node == null) {
             return 0;
         }
 
-        int left = GetDiameter(root.left);
-        int right = GetDiameter(root.right);
-        maxDiameter = Math.Max(maxDiameter, left + right);
+        var left = GetDiameter(node.left);
+        var right = GetDiameter(node.right);
+
+        diameter = Math.Max(diameter, left + right);
 
         return Math.Max(left, right) + 1;
     }
