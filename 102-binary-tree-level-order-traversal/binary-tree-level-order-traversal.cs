@@ -12,52 +12,52 @@
  * }
  */
 public class Solution {
-    public IList<IList<int>> LevelOrder(TreeNode root) {        
-        List<IList<int>> res = new List<IList<int>>();
+    public IList<IList<int>> LevelOrder(TreeNode root) {
+        List<IList<int>> res = new();
+        Queue<Node> q = new();
+
         if(root == null) {
             return res;
         }
 
-        Queue<QNode> q = new Queue<QNode>();
         res.Add(new List<int> { root.val });
-
+        var prev = new Node(root, 0);
         if(root.left != null) {
-            q.Enqueue(new QNode(root.left, 1));
+            q.Enqueue(new Node(root.left, 1));
         }
+
         if(root.right != null) {
-            q.Enqueue(new QNode(root.right, 1));
+            q.Enqueue(new Node (root.right, 1));
         }
-
-        var prev = new QNode(root, 0);
-
-        while(q.Count != 0) {
-            var dq = q.Dequeue();
-            if(prev.level == dq.level) {
-                res.LastOrDefault().Add(dq.node.val);
+        while(q.Count > 0) {
+            var cur = q.Dequeue();
+            if(cur.level == prev.level) {
+                res[res.Count - 1].Add(cur.node.val);
             } else {
-                res.Add(new List<int> { dq.node.val });
+                res.Add(new List<int> { cur.node.val });
             }
 
-            if(dq.node.left != null) {
-                q.Enqueue(new QNode(dq.node.left, dq.level + 1));
-            }
-            if(dq.node.right != null) {
-                q.Enqueue(new QNode(dq.node.right, dq.level + 1));
+            if(cur.node.left != null) {
+                q.Enqueue(new Node(cur.node.left, cur.level + 1));
             }
 
-            prev = dq;
+            if(cur.node.right != null) {
+                q.Enqueue(new Node (cur.node.right, cur.level + 1));
+            }
+
+            prev = cur;
         }
 
         return res;
     }
 }
 
-public class QNode {
+partial class Node {
     public TreeNode node;
     public int level;
 
-    public QNode(TreeNode n, int l) {
-        node = n;
+    public Node(TreeNode t, int l) {
+        node = t;
         level = l;
     }
 }
