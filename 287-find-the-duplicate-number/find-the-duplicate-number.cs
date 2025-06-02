@@ -7,8 +7,6 @@ public class Solution {
             fast = nums[nums[fast]];
         } while(slow != fast);
 
-        // Console.WriteLine($"slow: {slow}; fast: {fast}");
-
         int next = 0;
         while(next != slow) {
             next = nums[next];
