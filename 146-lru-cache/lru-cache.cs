@@ -1,90 +1,114 @@
 public class LRUCache {
-    private int capacity;
-    private Dictionary<int, DNode> map;
-    private DList priorityList;
-
+    private ListNode head;
+    private ListNode last;
+    private int c;
+    private Dictionary<int, ListNode> map;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
-        map = new Dictionary<int, DNode>();
-        priorityList = new DList();
+        c = capacity;
+        // head = new();
+        // last = head;
+        map = new();
     }
     
     public int Get(int key) {
+        Console.WriteLine($"Getting {key}");
         if(map.ContainsKey(key)) {
-            priorityList.MoveFirst(map[key]);
-            return map[key].val;
+            var node = map[key];
+            int val = node.val;
+
+            AlterNode(node);
+
+            return val;
         }
 
         return -1;
     }
     
     public void Put(int key, int value) {
-        if(!map.ContainsKey(key)) {
-            var node = new DNode(value, key);
-            priorityList.AddFirst(node);
-            map[key] = node;
-
-            if(map.Count > capacity) {
-                var removed = priorityList.RemoveLast();
-                if(map.ContainsKey(removed.key)) {
-                    map.Remove(removed.key);
-                }                
-            }
+        if (map.ContainsKey(key)) {
+            var node = map[key];
+            node.val = value;
+            AlterNode(node);
         } else {
-            map[key].val = value;
-            priorityList.MoveFirst(map[key]);
+            if (map.Count >= c) {
+                RemoveLast();
+            }
+
+            var node = new ListNode(key, value);
+            AddFirst(node);
+            map[key] = node;
         }
     }
-}
 
-public class DList {
-    private DNode head;
-    private DNode tail;
 
-    public DList() {
-        head = new DNode(-1, -1);
-        tail = new DNode(-1, -1);
+    private void RemoveLast() {
+        if (last == null) return;
 
-        head.next = tail;
-        tail.prev = head;
+        var node = last;
+        if (head == last) {
+            head = null;
+            last = null;
+        } else {
+            last = last.prev;
+            last.next = null;
+        }
+
+        if (map.ContainsKey(node.key)) {
+            map.Remove(node.key);
+        }
     }
 
-    public void AddFirst(DNode node) {
-        var next = head.next;
-        node.next = next;
-        node.prev = head;
-        next.prev = node;
-        head.next = node;
-    }
 
-    public DNode RemoveLast() {
-        return Remove(tail.prev);
-    }
+    private void AlterNode(ListNode node) {
+        if(node == head) {
+            return;
+        }
+        if(node == last) {
+            last = node.prev;
+            AddFirst(node);
+            return;
+        }
 
-    public DNode Remove(DNode node) {
         var prev = node.prev;
         var next = node.next;
         prev.next = next;
         next.prev = prev;
 
-        return node;
+        AddFirst(node);
     }
 
-    public void MoveFirst(DNode node) {
-        Remove(node);
-        AddFirst(node);
+/*
+head -> 1
+Add(2)
+2-> head(1)
+*/
+
+    private void AddFirst(ListNode node) {
+        node.next = null;
+        node.prev = null;
+
+        if(head == null) {
+            head = node;
+            last = node;
+            return;
+        }
+
+        node.next = head;
+        head.prev = node;
+
+        head = node;
     }
 }
 
-public class DNode {
+public class ListNode {
     public int key;
     public int val;
-    public DNode next;
-    public DNode prev;
+    public ListNode next;
+    public ListNode prev;
 
-    public DNode(int v, int k) {
-        val = v;
+    public ListNode(int k, int v) {
         key = k;
+        val = v;
         next = null;
         prev = null;
     }
