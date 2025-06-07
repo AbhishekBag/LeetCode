@@ -11,7 +11,7 @@ public class LRUCache {
     }
     
     public int Get(int key) {
-        Console.WriteLine($"Getting {key}");
+        // Console.WriteLine($"Getting {key}");
         if(map.ContainsKey(key)) {
             var node = map[key];
             int val = node.val;
