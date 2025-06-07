@@ -5,13 +5,10 @@ public class LRUCache {
     private Dictionary<int, ListNode> map;
     public LRUCache(int capacity) {
         c = capacity;
-        // head = new();
-        // last = head;
         map = new();
     }
     
     public int Get(int key) {
-        // Console.WriteLine($"Getting {key}");
         if(map.ContainsKey(key)) {
             var node = map[key];
             int val = node.val;
@@ -40,7 +37,6 @@ public class LRUCache {
         }
     }
 
-
     private void RemoveLast() {
         if (last == null) return;
 
@@ -57,7 +53,6 @@ public class LRUCache {
             map.Remove(node.key);
         }
     }
-
 
     private void AlterNode(ListNode node) {
         if(node == head) {
@@ -77,12 +72,6 @@ public class LRUCache {
 
         AddFirst(node);
     }
-
-/*
-head -> 1
-Add(2)
-2-> head(1)
-*/
 
     private void AddFirst(ListNode node) {
         node.next = null;
