@@ -65,6 +65,7 @@ public class LRUCache {
         }
         if(node == last) {
             last = node.prev;
+            last.next = null;
             AddFirst(node);
             return;
         }
