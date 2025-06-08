@@ -21,9 +21,9 @@ public class Solution {
             n--;
         }
 
-        // if(tmp == null) {
-        //     return null;
-        // }
+        if(tmp == null) {
+            return head.next;
+        }
 
         var tmp1 = head;
         ListNode prev = null;
@@ -33,12 +33,7 @@ public class Solution {
             tmp1 = tmp1.next;
         }
 
-        if(prev != null) {
-            prev.next = tmp1.next;
-        } else {
-            head = head.next;
-        }
-        
+        prev.next = tmp1.next;        
 
         return head;
     }
