@@ -27,23 +27,29 @@ public class Solution {
             return null;
         }
 
-        Dictionary<Node, Node> collection = new Dictionary<Node, Node>();
+        Dictionary<Node, Node> map = new Dictionary<Node, Node>();
         Queue<Node> q = new Queue<Node>();
         q.Enqueue(node);
-        collection[node] = new Node(node.val);
 
         while(q.Count > 0) {
-            Node dq = q.Dequeue();            
-            foreach(var neighbor in dq.neighbors) {                
-                if(!collection.ContainsKey(neighbor)) {
-                    collection[neighbor] = new Node(neighbor.val);
+            var dq = q.Dequeue();
+            if(!map.ContainsKey(dq)) {
+                map[dq] = new Node(dq.val);
+            }
+
+            foreach(var neighbor in dq.neighbors) {
+                if(!map.ContainsKey(neighbor)) {
                     q.Enqueue(neighbor);
                 }
-
-                collection[dq].neighbors.Add(collection[neighbor]);
             }
         }
 
-        return collection[node];
+        foreach(var n in map) {
+            foreach(var old in n.Key.neighbors) {
+                map[n.Key].neighbors.Add(map[old]);
+            }
+        }
+
+        return map[node];
     }
 }
