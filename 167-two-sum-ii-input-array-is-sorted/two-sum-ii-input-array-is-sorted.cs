@@ -1,35 +1,24 @@
 public class Solution {
     public int[] TwoSum(int[] numbers, int target) {
-        int [] res = new int[2];
-        for(int i = 0; i < numbers. Length; i++) {
-            int k = BinarySearch(numbers, target - numbers[i], i + 1);
+        int i = 0, j = numbers.Length - 1;
 
-            if(k != -1) {
-                res[0] = i + 1;
-                res[1] = k + 1;
+        while(i < j) {
+            // while(i < numbers.Length && numbers[i] + numbers[j] < target) {
+            //     i++;
+            // }
 
-                return res;
-            }
+            // while(j >= 0 && numbers[i] + numbers[j] > target) {
+            //     j--;
+            // }
+
+            var sum = numbers[i] + numbers[j];
+            if(sum < target) {
+                i++;
+            } else if(sum >target) {
+                j--;
+            } else break;
         }
 
-        return res;
-    }
-
-    private int BinarySearch(int[] numbers, int target, int start) {
-        int n = numbers.Length - 1;
-        int mid = 0;
-        while(start <= n) {
-            mid = (start + n) / 2;
-            if(numbers[mid] == target) {
-                return mid;
-            }
-            if(numbers[mid] > target) {
-                n = mid - 1;
-            } else {
-                start = mid + 1;
-            }
-        }
-
-        return -1;
+        return new int[2] {i+1, j+1};
     }
 }
