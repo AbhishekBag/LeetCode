@@ -1,25 +1,28 @@
 public class Solution {
     public bool IsPalindrome(string s) {
-        s = CleanString(s);
-        int n = s.Length;
+        if(s.Length <= 1) {
+            return true;
+        }
 
-        for(int i = 0; i < n/2; i++) {
-            if(s[i] != s[n - i - 1]) {
+        int i = 0, j = s.Length - 1;
+
+        while(i <= j) {
+            while(i < s.Length && !char.IsLetterOrDigit(s[i])) i++;
+            while(j >= 0 && !char.IsLetterOrDigit(s[j])) j--;
+
+            if(i >= s.Length || j < 0) {
+                return true;
+            }
+
+            Console.WriteLine($"i: {i}, s[i]: {s[i]}; j: {j}, s[j]: {s[j]}");
+            if(i <= j && char.ToUpperInvariant(s[i]) != char.ToUpperInvariant(s[j])) {
                 return false;
             }
+
+            i++;
+            j--;
         }
 
         return true;
-    }
-
-    private string CleanString(string str) {
-        var sb = new StringBuilder();
-        foreach(char c in str) {
-            if(Char.IsLetterOrDigit(c)) {
-                sb.Append(Char.ToLower(c));
-            }
-        }
-
-        return sb.ToString();
     }
 }
