@@ -14,9 +14,6 @@ public class Solution {
             if(numbers[i] + numbers[j] == target) {
                 return new int[2] { i + 1, j + 1 };
             }
-
-            // i++;
-            // j--;
         }
 
         return new int[2];
