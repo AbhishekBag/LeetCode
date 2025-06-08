@@ -15,7 +15,7 @@ public class Solution {
             }
 
             // Console.WriteLine($"i: {i}, s[i]: {s[i]}; j: {j}, s[j]: {s[j]}");
-            if(i <= j && char.ToUpperInvariant(s[i]) != char.ToUpperInvariant(s[j])) {
+            if(i <= j && char.ToUpper(s[i]) != char.ToUpper(s[j])) {
                 return false;
             }
 
