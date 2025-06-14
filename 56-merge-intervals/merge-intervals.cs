@@ -1,25 +1,21 @@
 public class Solution {
     public int[][] Merge(int[][] intervals) {
-        if(intervals.Length <= 1) {
-            return intervals;
-        }
-
-        Array.Sort(intervals, (a, b) => a[0].CompareTo(b[0]));
-
+        Array.Sort(intervals, (a, b) => { return a[0].CompareTo(b[0]);});
         List<int[]> res = new List<int[]>();
-        var cur = intervals[0];
+        var curr = intervals[0];
+
         for(int i = 1; i < intervals.Length; i++) {
             var next = intervals[i];
-            if(IsOverlapping(cur, next)) {
-                cur[0] = Math.Min(cur[0], next[0]);
-                cur[1] = Math.Max(cur[1], next[1]);
+            if(IsOverlapping(curr, next)) {
+                curr[0] = Math.Min(curr[0], next[0]);
+                curr[1] = Math.Max(curr[1], next[1]);
             } else {
-                res.Add(cur);
-                cur = next;
+                res.Add(curr);
+                curr = next;
             }
         }
 
-        res.Add(cur);
+        res.Add(curr);
 
         return res.ToArray();
     }
