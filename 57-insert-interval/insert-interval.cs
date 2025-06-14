@@ -1,39 +1,33 @@
 public class Solution {
     public int[][] Insert(int[][] intervals, int[] newInterval) {
-        List<int[]> resList = new List<int[]>();
+        List<int[]> res = new List<int[]>();
         bool added = false;
 
-        if(intervals.Length == 0) {
-            resList.Add(new int[] { newInterval[0], newInterval[1] });
-            added = true;
-        }
-
         for(int i = 0; i < intervals.Length; i++) {
-            var intervalInHand = intervals[i];
-            if(newInterval[1] < intervalInHand[0]) {
-                resList.Add(new int[] { newInterval[0], newInterval[1]} );
-                AddIntervals(resList, intervals, i);
+            var curr = intervals[i];
+            if(curr[0] > newInterval[1]) {
+                res.Add(new int[] { newInterval[0], newInterval[1] });
+                AddIntervals(res, intervals, i);
                 added = true;
                 break;
-            } else if(newInterval[0] > intervalInHand[1]) {
-                resList.Add(new int[] { intervalInHand[0], intervalInHand[1]} );
+            } else if(curr[1] < newInterval[0]) {
+                res.Add(new int[] { curr[0], curr[1]});
             } else {
-                newInterval[0] = Math.Min(newInterval[0], intervalInHand[0]);
-                newInterval[1] = Math.Max(newInterval[1], intervalInHand[1]);
+                newInterval[0] = Math.Min(curr[0], newInterval[0]);
+                newInterval[1] = Math.Max(curr[1], newInterval[1]);
             }
         }
 
         if(!added) {
-            resList.Add(new int[] { newInterval[0], newInterval[1]} );
+            res.Add(new int[] { newInterval[0], newInterval[1] });
         }
 
-        return resList.ToArray();
+        return res.ToArray();
     }
 
-    private void AddIntervals(List<int[]> resList, int[][] intervals, int i) {
-        while(i < intervals.Length) {
-            resList.Add(new int[]{ intervals[i][0], intervals[i][1]} );
-            i++;
+    private void AddIntervals(List<int[]> res, int[][] intervals, int i) {
+        for(; i < intervals.Length; i++) {
+            res.Add(new int[] { intervals[i][0], intervals[i][1]});
         }
     }
 }
