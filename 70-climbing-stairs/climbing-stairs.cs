@@ -1,18 +1,21 @@
 public class Solution {
+    private int[] memo;
     public int ClimbStairs(int n) {
+        memo = Enumerable.Repeat(Int32.MaxValue, n + 1).ToArray();
+        return CountWays(n);
+    }
+
+    private int CountWays(int n) {
         if(n <= 2) {
             return n;
         }
 
-        int cur = 0;
-        int prev1 = 2, prev2 = 1;
-
-        for(int i = 3; i <= n; i++) {
-            cur = prev1 + prev2;
-            prev2 = prev1;
-            prev1 = cur;
+        if(memo[n] != Int32.MaxValue) {
+            return memo[n];
         }
 
-        return cur;
+        memo[n] = CountWays(n - 1) + CountWays(n - 2);
+
+        return memo[n];
     }
 }
