@@ -1,20 +1,21 @@
 public class Solution {
-    private int[] dp;
+    private int[] memo;
     public int Rob(int[] nums) {
-        dp = Enumerable.Repeat(-1, nums.Length + 1).ToArray();
-        return RobHouse(nums, 0);
+        memo = Enumerable.Repeat(Int32.MinValue, nums.Length).ToArray();
+        return GetSum(nums, 0);
     }
 
-    private int RobHouse(int[] nums, int i) {
-        if(i >= nums.Length) {
+    private int GetSum(int[] nums, int index) {
+        if(index >= nums.Length) {
             return 0;
         }
 
-        if(dp[i] != -1) {
-            return dp[i];
+        if(memo[index] != Int32.MinValue) {
+            return memo[index];
         }
+        
+        memo[index] = Math.Max(nums[index] + GetSum(nums, index + 2), GetSum(nums, index + 1));
 
-        dp[i] = Math.Max(nums[i] + RobHouse(nums, i + 2), RobHouse(nums, i + 1));
-        return dp[i];
+        return memo[index];
     }
 }
