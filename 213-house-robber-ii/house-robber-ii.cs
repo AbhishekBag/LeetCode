@@ -1,31 +1,27 @@
 public class Solution {
-    private int[] collection1;
-    private int[] collectionN;
+    private int[] memo1, memo2;
     public int Rob(int[] nums) {
         if(nums.Length == 1) {
             return nums[0];
         }
         
-        collection1 = Enumerable.Repeat(-1, nums.Length).ToArray();
-        collectionN = Enumerable.Repeat(-1, nums.Length).ToArray();
-        return Math.Max(RobHouse(nums, 0, nums.Length - 2, collection1), RobHouse(nums, 1, nums.Length - 1, collectionN));
+        memo1 = Enumerable.Repeat(-1, nums.Length).ToArray();
+        memo2 = Enumerable.Repeat(-1, nums.Length).ToArray();
+        
+        return Math.Max(CollectBounty(nums, 0, nums.Length - 2, 0, memo1), CollectBounty(nums, 1, nums.Length - 1, 1, memo2));
     }
 
-    private int RobHouse(int[] nums, int houseNo, int end, int[] collection) {
-        if(houseNo > end) {
+    private int CollectBounty(int[] nums, int start, int end, int index, int[] memo) {
+        if(index < start || index > end) {
             return 0;
         }
 
-        if(collection[houseNo] != -1) {
-            return collection[houseNo];
+        if(memo[index] != -1) {
+            return memo[index];
         }
 
-        int picked = nums[houseNo] + RobHouse(nums, houseNo + 2, end, collection);
-        int notPicked = RobHouse(nums, houseNo + 1, end, collection);
+        memo[index] = Math.Max(nums[index] + CollectBounty(nums, start, end, index + 2, memo), CollectBounty(nums, start, end, index + 1, memo));
 
-        // return Math.Max(picked, notPicked);
-
-        collection[houseNo] = Math.Max(picked, notPicked);
-        return collection[houseNo];
+        return memo[index];
     }
 }
