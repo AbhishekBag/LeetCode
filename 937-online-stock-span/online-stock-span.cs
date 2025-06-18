@@ -1,16 +1,16 @@
 public class StockSpanner {
-    private Stack<Node> stack;
+    private Stack<Node> stk;
     public StockSpanner() {
-        stack = new ();
+        stk = new Stack<Node>();
     }
     
     public int Next(int price) {
         int span = 1;
-        while(stack.Count() > 0 && stack.Peek().price <= price) {
-            span += stack.Pop().span;
+        while(stk.Count > 0 && stk.Peek().price <= price) {
+            span += stk.Pop().span;
         }
 
-        stack.Push(new Node(price, span));
+        stk.Push(new Node(price, span));
 
         return span;
     }
@@ -20,9 +20,9 @@ public class Node {
     public int price;
     public int span;
 
-    public Node(int _p, int _s) {
-        price = _p;
-        span = _s;
+    public Node(int p, int s) {
+        price = p;
+        span = s;
     }
 }
 
