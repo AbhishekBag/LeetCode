@@ -18,17 +18,5 @@ public class Solution {
         }
 
         return new int[] { maxRow, maxCount };
-
-        /*
-        for(int j = 0; j < mat[0].Length; j++) {
-            for(int i = 0; i < mat.Length; i++) {
-                if(mat[i][j] == 1) {
-                    return new int[2] { i, mat[0].Length - j};
-                }
-            }
-        }
-
-        return new int[2] { 0, 0 };
-        */
     }
 }
