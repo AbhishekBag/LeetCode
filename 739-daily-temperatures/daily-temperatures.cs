@@ -1,18 +1,31 @@
 public class Solution {
     public int[] DailyTemperatures(int[] temperatures) {
-        int n = temperatures.Length;
-        int[] res = new int[n];
-        Stack<int> stk = new();
+        Stack<Node> stk = new Stack<Node>();
+        int[] res = new int[temperatures.Length];
 
-        for(int i = 0; i < n; i++) {
-            while(stk.Count() > 0 && temperatures[stk.Peek()] < temperatures[i]) {
-                int index = stk.Pop();
-                res[index] = i - index;
+        stk.Push(new Node(temperatures[0], 0));
+        for(int i = 1; i < temperatures.Length; i++) {
+            while(stk.Count > 0 && stk.Peek().temp < temperatures[i]) {
+                var ind = stk.Pop().index;
+                res[ind] = i - ind;
             }
+            
+            stk.Push(new Node(temperatures[i], i));
+        }
 
-            stk.Push(i);
+        while(stk.Count > 0) {
+            res[stk.Pop().index] = 0;
         }
 
         return res;
+    }
+}
+
+public class Node {
+    public int temp;
+    public int index;
+    public Node(int t, int i) {
+        temp = t;
+        index = i;
     }
 }
