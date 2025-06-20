@@ -3,7 +3,6 @@ public class Solution {
         int n = height.Length;
         int sum = 0;
         int[] left = new int[n];
-        int[] right = new int[n];
 
         int max = Int32.MinValue;
         for(int i = 0; i < n; i++) {
