@@ -1,24 +1,20 @@
 public class Solution {
     public int Trap(int[] height) {
         int n = height.Length;
-        int[] maxLeft = new int[n];
-        int[] maxRight = new int[n];
-
-        int maxTill = 0;
-        for(int i = 0; i < n; i++) {
-            maxTill = Math.Max(maxTill, height[i]);
-            maxLeft[i] = maxTill;
-        }
-
-        maxTill = 0;
-        for(int j = n - 1; j >= 0; j--) {
-            maxTill = Math.Max(maxTill, height[j]);
-            maxRight[j] = maxTill;
-        }
-
         int sum = 0;
+        int[] left = new int[n];
+        int[] right = new int[n];
+
+        int max = Int32.MinValue;
         for(int i = 0; i < n; i++) {
-            sum += Math.Min(maxLeft[i], maxRight[i]) - height[i];
+            max = Math.Max(max, height[i]);
+            left[i] = max;
+        }
+
+        max = Int32.MinValue;
+        for(int i = n - 1; i >= 0; i--) {
+            max = Math.Max(max, height[i]);
+            sum += Math.Min(left[i], max) - height[i];
         }
 
         return sum;
