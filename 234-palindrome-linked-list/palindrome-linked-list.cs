@@ -10,35 +10,26 @@
  * }
  */
 public class Solution {
+    private ListNode ref1 = null;
+    private bool res = true;
     public bool IsPalindrome(ListNode head) {
-        if(head == null || head.next == null) {
-            return true;
+        ref1 = head;
+        PrintReverse(head);
+        return res;
+    }
+
+    private void PrintReverse(ListNode node) {
+        if(node == null) {
+            return;
         }
 
-        Stack<int> stk = new Stack<int>();
-        ListNode slow = head;
-        ListNode fast = head;
+        PrintReverse(node.next);
 
-        while(fast != null && fast.next != null) {
-            stk.Push(slow.val);
-            slow = slow.next;
-            fast = fast.next.next;
+        if(ref1.val != node.val) {
+            res = false;
+            return;
         }
 
-        if(fast != null && fast.next == null) {
-            // stk.Pop();
-            slow = slow.next;
-        }
-
-        while(slow != null && stk.Count > 0) {
-            if(stk.Peek() != slow.val) {
-                return false;
-            }
-
-            stk.Pop();
-            slow = slow.next;
-        }
-
-        return stk.Count == 0 ? true : false;
+        ref1 = ref1.next;
     }
 }
