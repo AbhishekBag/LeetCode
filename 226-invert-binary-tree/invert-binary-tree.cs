@@ -13,21 +13,17 @@
  */
 public class Solution {
     public TreeNode InvertTree(TreeNode root) {
-        InvertNode(root);
-
-        return root;
-    }
-
-    private void InvertNode(TreeNode root) {
         if(root == null) {
-            return;
+            return root;
         }
 
-        InvertNode(root.left);
-        InvertNode(root.right);
+        InvertTree(root.left);
+        InvertTree(root.right);
 
-        var tmp = root.left;
+        var temp = root.left;
         root.left = root.right;
-        root.right = tmp;
+        root.right = temp;
+
+        return root;
     }
 }
