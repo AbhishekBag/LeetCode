@@ -21,9 +21,9 @@ public class Solution {
             return 0;
         }
 
-        int left = GetDepth(root.left);
-        int right = GetDepth(root.right);
+        int leftDepth = GetDepth(root.left);
+        int rightDepth = GetDepth(root.right);
 
-        return Math.Max(left, right) + 1;
+        return Math.Max(leftDepth, rightDepth) + 1;
     }
 }
