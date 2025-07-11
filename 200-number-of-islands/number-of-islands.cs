@@ -1,12 +1,12 @@
 public class Solution {
-    private int[] rowMove;
-    private int[] colMove;
+    private int R;
+    private int C;
+    private int[] rowMove = new int[] { 1, 0, -1, 0 };
+    private int[] colMove = new int[] { 0, 1, 0, -1 };
     public int NumIslands(char[][] grid) {
-        rowMove = new int[] { 0, 1, 0, -1 };
-        colMove = new int[] { 1, 0, -1, 0 };
+        R = grid.Length;
+        C = grid[0].Length;
         int count = 0;
-        int R = grid.Length;
-        int C = grid[0].Length;
 
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
@@ -20,17 +20,15 @@ public class Solution {
         return count;
     }
 
-    private void MarkIsland(char[][] grid, int r, int c) {
-        int R = grid.Length;
-        int C = grid[0].Length;
-
-        if(r < 0 || r >= R || c < 0 || c >= C || grid[r][c] != '1') {
+    private void MarkIsland(char[][] grid, int i, int j) {
+        if(i < 0 || i >= R || j < 0 || j >= C || grid[i][j] != '1') {
             return;
         }
 
-        grid[r][c] = '*';
-        for(int i = 0; i < 4; i++) {
-            MarkIsland(grid, r + rowMove[i], c + colMove[i]);
+        grid[i][j] = '*';
+
+        for(int m = 0; m < 4; m++) {
+            MarkIsland(grid, i + rowMove[m], j + colMove[m]);
         }
     }
 }
