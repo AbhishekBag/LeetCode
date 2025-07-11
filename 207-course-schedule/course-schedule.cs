@@ -34,17 +34,16 @@ public class Solution {
                 visited.Add(current);
                 if(outBoundMap.ContainsKey(current)) {
                     foreach(var item in outBoundMap[current]) {
-                        if(inboundMap.ContainsKey(item)) {
+                        // if(inboundMap.ContainsKey(item)) {
                             if(inboundMap[item].Count == 1) {
                                 q.Enqueue(item);
                                 inboundMap.Remove(item);
                             } else {
                                 inboundMap[item].Remove(current);
                             }
-                        }
+                        // }
                     }
-                }
-                
+                }                
             }            
         }
 
