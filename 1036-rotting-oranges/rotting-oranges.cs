@@ -42,33 +42,4 @@ public class Solution {
 
         return fresh == 0 ? minutes : -1;
     }
-
-    private void CollectRottenOranges(int[][] grid, Queue<(int i, int j)> q) {
-        for(int i = 0; i < R; i++) {
-            for(int j = 0; j < C; j++) {
-                if(grid[i][j] == 2) {
-                    grid[i][j] = -1;
-                    q.Enqueue((i, j));
-                }
-            }
-        }
-    }
-
-    private void RotOranges(int[][] grid, Queue<(int i, int j)> q) {
-        while(q.Count > 0) {
-            (int i, int j) = q.Dequeue();
-            if(i < 0 || i >= R || j < 0 || j >= C) {
-                return;
-            }
-
-            for(int m = 0; m < 4; m++) {
-                int nI = i + moveR[m];
-                int nJ = j + moveC[m];
-
-                if(nI >= 0 && nI < R && nJ >= 0 && nJ < C && grid[nI][nJ] == 1) {
-                    grid[nI][nJ] = 2;
-                }
-            }
-        }        
-    }
 }
